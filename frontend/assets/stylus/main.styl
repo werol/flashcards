@@ -14,6 +14,10 @@ body
   -moz-osx-font-smoothing grayscale
   padding 0 1rem 1rem 1rem
 
+h1
+  color #fff
+  text-align center
+
 nav a
   color #ffffff
 
@@ -23,12 +27,23 @@ button
   outline 0
   background theme_dark
   border 0
+  border-radius 0
   padding 15px
   color #ffffff
   font-size 14px
   -webkit-transition all 0.3 ease
   transition all 0.3 ease
   cursor: pointer
+
+input
+  font-family "Roboto", sans-serif
+  outline 0
+  background #f2f2f2
+  border 0
+  margin 5px
+  padding 15px
+  box-sizing border-box
+  font-size 14px
 
 .login-page
   padding 8% 0 0
@@ -47,15 +62,8 @@ button
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
 
   input
-    font-family "Roboto", sans-serif
-    outline 0
-    background #f2f2f2
-    width 100%
-    border 0
     margin 0 0 15px
-    padding 15px
-    box-sizing border-box
-    font-size 14px
+    width 100%
 
   button
     width 100%
@@ -78,3 +86,52 @@ button
 
   .success-message
     color #4f8a10
+
+.flashcard-form-page
+  padding 2% 0 0
+
+  .flashcard-form-container
+    position relative
+    z-index 1
+    background #ffffff
+    width: 865px
+    margin 0 auto 100px
+    padding 45px
+    text-align center
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
+
+    input
+      width 765px
+
+    button
+      margin 5px
+
+    .save-btn, .add-btn
+      text-align right
+      margin-right 0
+
+    .flashcardRow
+      display flex
+      width 100%
+
+      input
+        width 350px
+
+.flashcard-sets-grid
+  text-align center
+
+  a
+    display inline-block
+    color #fff
+    margin 50px
+    text-decoration none
+
+  .tile
+    display flex
+    width 200px
+    box-shadow 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
+    justify-content center
+    align-items center
+
+    p
+      font-size 25px

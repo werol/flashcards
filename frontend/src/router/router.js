@@ -2,10 +2,11 @@ import React from 'react';
 import { Route, Redirect, IndexRoute } from 'react-router';
 
 import App from '../ui/container/App';
-import UsersListComponent from '../ui/container/FleshcardsPage';
+import UsersListComponent from '../ui/container/FlashcardSetsPage';
 import UserProfile from '../ui/container/UserProfile';
 import LoginPage from '../ui/container/LoginPage';
 import RegisterPage from '../ui/container/RegisterPage';
+import CreateFleshcardSetPage from '../ui/container/CreateFlashcardSetPage';
 import privateRoute from './privateRoute';
 
 export default (onLogout) => (
@@ -15,5 +16,6 @@ export default (onLogout) => (
     <Route path="register" component={RegisterPage}/>
     <Route path="login" component={LoginPage}/>
     <Route path="logout" onEnter={onLogout}/>
+    <Route path="add_set" component={privateRoute(CreateFleshcardSetPage)}/>
   </Route>
 );

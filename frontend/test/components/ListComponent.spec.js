@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import  expect, { createSpy } from 'expect';
 
 import React from 'react';
-import ListComponent from '../../src/ui/component/Fleshcards';
+import ListComponent from '../../src/ui/component/FlashcardSets';
 
 const fetchUsers = createSpy();
 const items = ['one', 'two', 'three'];
@@ -10,7 +10,7 @@ let props = {fetchUsers, items};
 
 describe('components', () => {
 
-  describe('ListComponent', () => {
+  describe('FlashcardSets', () => {
 
     it('should render three items', () => {
       const component = shallow(<ListComponent {...props} />);
