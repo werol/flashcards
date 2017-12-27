@@ -3,6 +3,8 @@ package flashcards.controller;
 import flashcards.model.FlashcardSet;
 import flashcards.service.FlashcardService;
 import flashcards.service.FlashcardSetService;
+import flashcards.service.SavingFlashcardsContext;
+import flashcards.service.SavingNewFlashcards;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +41,10 @@ public class FlashcardController {
   }
 
   @RequestMapping(method=POST, path="/api/flashcards")
-  public ResponseEntity<?> createFlashcardSet(@RequestBody FlashcardSet flashcardSet) {
-    return new ResponseEntity<>(flashcardSetService.save(flashcardSet), HttpStatus.CREATED);
+  public ResponseEntity<?> saveFlashcardSet(@RequestBody FlashcardSet flashcardSet) {
+    SavingFlashcardsContext context = new SavingFlashcardsContext();
+    context.setStrategy(new SavingNewFlashcards(flashcardSetService));
+    return new ResponseEntity<>(context.saveFlashcardSet(flashcardSet), HttpStatus.CREATED);
   }
 
   @RequestMapping(method=DELETE, path="/api/flashcards/{setId}")

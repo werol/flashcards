@@ -9,7 +9,7 @@ const initialState = {
 
 // Reducer
 
-export default function flashcardsCreationReducer(state = initialState, action) {
+export default function flashcardsSaveReducer(state = initialState, action) {
   switch (action.type) {
     case CREATE_FLASHCARDS_SUCCESS:
       return {
@@ -23,7 +23,7 @@ export default function flashcardsCreationReducer(state = initialState, action) 
 
 // Actions
 
-export function createFlashcards(record) {
+export function saveFlashcards(record) {
   return  {
     types: [CREATE_FLASHCARDS, CREATE_FLASHCARDS_SUCCESS, CREATE_FLASHCARDS_FAIL],
     promise: (client) => client.post('/api/flashcards', record),

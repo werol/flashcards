@@ -1,21 +1,22 @@
 import React from 'react';
 import { Route, Redirect, IndexRoute } from 'react-router';
-
 import App from '../ui/container/App';
-import UsersListComponent from '../ui/container/FlashcardSetsPage';
+import FlashcardSets from '../ui/container/FlashcardSetsPage';
 import UserProfile from '../ui/container/UserProfile';
 import LoginPage from '../ui/container/LoginPage';
 import RegisterPage from '../ui/container/RegisterPage';
-import CreateFleshcardSetPage from '../ui/container/CreateFlashcardSetPage';
+import FlashcardsFormPage from '../ui/container/FlashcardsFormPage';
+import ShowFlashcardSetPage from '../ui/container/ShowFlashcardSetPage';
 import privateRoute from './privateRoute';
 
 export default (onLogout) => (
   <Route path="/" name="app" component={App}>
-    <IndexRoute component={UsersListComponent}/>
+    <IndexRoute component={privateRoute(FlashcardSets)}/>
     <Route path="profile" component={privateRoute(UserProfile)}/>
     <Route path="register" component={RegisterPage}/>
     <Route path="login" component={LoginPage}/>
     <Route path="logout" onEnter={onLogout}/>
-    <Route path="add_set" component={privateRoute(CreateFleshcardSetPage)}/>
+    <Route path="flashcards-form" component={privateRoute(FlashcardsFormPage)}/>
+    <Route path="show-set/:setId" component={privateRoute(ShowFlashcardSetPage)}/>
   </Route>
 );

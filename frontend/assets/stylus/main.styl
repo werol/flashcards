@@ -12,7 +12,6 @@ body
   font-family "Roboto", sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
-  padding 0 1rem 1rem 1rem
 
 h1
   color #fff
@@ -20,6 +19,11 @@ h1
 
 nav a
   color #ffffff
+  text-align center
+  right 0
+
+nav li
+  min-width 100px
 
 button
   font-family "Roboto", sans-serif
@@ -33,7 +37,7 @@ button
   font-size 14px
   -webkit-transition all 0.3 ease
   transition all 0.3 ease
-  cursor: pointer
+  cursor pointer
 
 input
   font-family "Roboto", sans-serif
@@ -46,7 +50,7 @@ input
   font-size 14px
 
 .login-page
-  padding 8% 0 0
+  padding 10% 0 0
 
 .register-page
   padding 4% 0 0
@@ -132,6 +136,54 @@ input
     box-shadow 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
     justify-content center
     align-items center
+    position relative
 
+    a
+      margin 0
+      position absolute
+      right 0
+      top 0
+
+      span
+        padding 5px
+        font-size 18px
     p
       font-size 25px
+
+.flashcard-show
+  text-align center
+  max-width 800px
+  margin auto
+  margin-top 6%
+  font-size 36px
+
+  .left-arrow, .right-arrow
+    display inline-flex
+    width 5%
+    height 400px
+    vertical-align top
+    align-items center
+    justify-content center
+    cursor pointer
+
+  .flashcard
+    display inline-flex
+    width 80%
+    height 400px
+    background-color #fff
+    box-shadow 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
+    justify-content center
+    align-items center
+    transform-style preserve-3d
+    transition all 1.0s linear
+    position relative
+
+    .face
+      position absolute
+      backface-visibility hidden
+
+    .face.back
+      transform: rotateY(180deg)
+
+  .flashcard:hover
+    transform rotateY(180deg)

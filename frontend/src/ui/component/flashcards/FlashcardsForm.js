@@ -1,6 +1,8 @@
 import React from 'react'
 import { Field, FieldArray, reduxForm } from 'redux-form'
-import {createFlashcards} from "../../../reducers/flashcardsCreation";
+import {connect} from 'react-redux';
+import {saveFlashcards} from "../../../reducers/flashcardsSave";
+
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
@@ -42,7 +44,7 @@ const renderFlashcard = ({ fields, meta: { error, submitFailed } }) => (
   </div>
 );
 
-const FlashcardSetForm = props => {
+let FlashcardsForm = props => {
   const { handleSubmit, submitting } = props;
   return (
     <div className="flashcard-form-page">
@@ -68,12 +70,24 @@ const FlashcardSetForm = props => {
 
 const submit = (values, dispatch) => {
   window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-  return dispatch(createFlashcards(values));
+  return dispatch(saveFlashcards(values));
 
 };
 
-export default reduxForm({
+FlashcardsForm = reduxForm({
   form: 'flashcardSet',
   onSubmit: submit
-})(FlashcardSetForm);
+})(FlashcardsForm);
 
+FlashcardsForm = connect(
+  state => ({
+    initialValues: {
+      owner: state.authentication.username,
+      name: state.flashcards.mode === "UPDATE" ? state.flashcards.currentItems.name : "",
+      flashcards: state.flashcards.mode === "UPDATE" ? state.flashcards.currentItems.flashcards : [{}]
+    },
+
+})
+)(FlashcardsForm);
+
+export default FlashcardsForm;
