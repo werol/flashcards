@@ -19,7 +19,7 @@ public class FlashcardSet implements Serializable {
 
   private String name;
 
-  @OneToMany(cascade = {CascadeType.ALL}, mappedBy="flashcardSet")
+  @OneToMany(cascade = {CascadeType.ALL}, mappedBy="flashcardSet", orphanRemoval=true)
   @JsonManagedReference
   private Set<Flashcard> flashcards = new HashSet<>();
 

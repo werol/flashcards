@@ -1,10 +1,7 @@
 package flashcards.controller;
 
 import flashcards.model.FlashcardSet;
-import flashcards.service.FlashcardService;
-import flashcards.service.FlashcardSetService;
-import flashcards.service.SavingFlashcardsContext;
-import flashcards.service.SavingNewFlashcards;
+import flashcards.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 public class FlashcardController {
@@ -41,9 +36,16 @@ public class FlashcardController {
   }
 
   @RequestMapping(method=POST, path="/api/flashcards")
-  public ResponseEntity<?> saveFlashcardSet(@RequestBody FlashcardSet flashcardSet) {
+  public ResponseEntity<?> createFlashcardSet(@RequestBody FlashcardSet flashcardSet) {
     SavingFlashcardsContext context = new SavingFlashcardsContext();
     context.setStrategy(new SavingNewFlashcards(flashcardSetService));
+    return new ResponseEntity<>(context.saveFlashcardSet(flashcardSet), HttpStatus.CREATED);
+  }
+
+  @RequestMapping(method=PUT, path="/api/flashcards")
+  public ResponseEntity<?> updateFlashcardSet(@RequestBody FlashcardSet flashcardSet) {
+    SavingFlashcardsContext context = new SavingFlashcardsContext();
+    context.setStrategy(new UpdatingFlashcards(flashcardSetService, flashcardService));
     return new ResponseEntity<>(context.saveFlashcardSet(flashcardSet), HttpStatus.CREATED);
   }
 

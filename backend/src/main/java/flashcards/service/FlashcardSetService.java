@@ -8,7 +8,7 @@ public interface FlashcardSetService {
 
   List<FlashcardSet> findAll();
 
-  FlashcardSet findBySetId(long set_id);
+  FlashcardSet findBySetId(long setId);
 
   FlashcardSet save(FlashcardSet flashcardSet);
 

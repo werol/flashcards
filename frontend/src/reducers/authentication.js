@@ -99,7 +99,7 @@ export function logout() {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
     promise: (client) => client.delete('/api/session'),
     afterSuccess: () => {
-      browserHistory.push('login');
+      browserHistory.push('/login');
     }
   };
 }

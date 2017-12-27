@@ -81,11 +81,18 @@ FlashcardsForm = reduxForm({
 
 FlashcardsForm = connect(
   state => ({
-    initialValues: {
-      owner: state.authentication.username,
-      name: state.flashcards.mode === "UPDATE" ? state.flashcards.currentItems.name : "",
-      flashcards: state.flashcards.mode === "UPDATE" ? state.flashcards.currentItems.flashcards : [{}]
-    },
+    initialValues: state.flashcards.mode === "UPDATE" ?
+      {
+        owner: state.authentication.username,
+        name: state.flashcards.currentItems.name,
+        flashcards: state.flashcards.currentItems.flashcards,
+        setId: state.flashcards.currentItems.setId
+      } :
+      {
+        owner: state.authentication.username,
+        name: "",
+        flashcards: [{}]
+      }
 
 })
 )(FlashcardsForm);

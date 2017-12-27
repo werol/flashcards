@@ -26,7 +26,7 @@ export default function flashcardsSaveReducer(state = initialState, action) {
 export function saveFlashcards(record) {
   return  {
     types: [CREATE_FLASHCARDS, CREATE_FLASHCARDS_SUCCESS, CREATE_FLASHCARDS_FAIL],
-    promise: (client) => client.post('/api/flashcards', record),
+    promise: (client) => record.setId ? client.put('/api/flashcards', record) : client.post('/api/flashcards', record),
     afterSuccess: () => {
       browserHistory.push('/');
     }

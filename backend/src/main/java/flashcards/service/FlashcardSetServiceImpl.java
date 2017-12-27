@@ -19,14 +19,15 @@ public class FlashcardSetServiceImpl implements FlashcardSetService {
   }
 
   @Override
-  public FlashcardSet findBySetId(long set_id) {
-    return flashcardSetRepository.findOne(set_id);
+  public FlashcardSet findBySetId(long setId) {
+    return flashcardSetRepository.findOne(setId);
   }
 
   @Override
   public FlashcardSet save(FlashcardSet flashcardSet) {
     return flashcardSetRepository.save(flashcardSet);
   }
+
   @Override
   public void delete(FlashcardSet flashcardSet) {
     flashcardSetRepository.delete(flashcardSet);
