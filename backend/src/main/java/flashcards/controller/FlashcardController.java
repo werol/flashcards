@@ -37,16 +37,7 @@ public class FlashcardController {
 
   @RequestMapping(method=POST, path="/api/flashcards")
   public ResponseEntity<?> createFlashcardSet(@RequestBody FlashcardSet flashcardSet) {
-    SavingFlashcardsContext context = new SavingFlashcardsContext();
-    context.setStrategy(new SavingNewFlashcards(flashcardSetService));
-    return new ResponseEntity<>(context.saveFlashcardSet(flashcardSet), HttpStatus.CREATED);
-  }
-
-  @RequestMapping(method=PUT, path="/api/flashcards")
-  public ResponseEntity<?> updateFlashcardSet(@RequestBody FlashcardSet flashcardSet) {
-    SavingFlashcardsContext context = new SavingFlashcardsContext();
-    context.setStrategy(new UpdatingFlashcards(flashcardSetService, flashcardService));
-    return new ResponseEntity<>(context.saveFlashcardSet(flashcardSet), HttpStatus.CREATED);
+    return new ResponseEntity<>(flashcardSetService.save(flashcardSet), HttpStatus.CREATED);
   }
 
   @RequestMapping(method=DELETE, path="/api/flashcards/{setId}")
