@@ -8,7 +8,7 @@ export class UserProfile extends Component {
       <div>
         <h1>My Profile</h1>
         <div className="container">
-          <p>Hello {this.props.username}!</p>
+          <h3>Hello, {this.props.username}!</h3>
         </div>
       </div>
     )

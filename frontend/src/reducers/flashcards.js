@@ -1,4 +1,5 @@
 import {browserHistory} from "react-router";
+import {FORM_MODE_CREATE, FORM_MODE_UPDATE} from "../ui/constants/constants";
 
 const FETCH_FLASHCARDS = 'flashcards/FETCH_FLASHCARDS';
 const FETCH_FLASHCARDS_SUCCESS = 'flashcards/FETCH_FLASHCARDS_SUCCESS';
@@ -8,12 +9,11 @@ const FETCH_CURRENT_FLASHCARDS = 'flashcards/FETCH_CURRENT_FLASHCARDS';
 const FETCH_CURRENT_FLASHCARDS_SUCCESS = 'flashcards/FETCH_CURRENT_FLASHCARDS_SUCCESS';
 const FETCH_CURRENT_FLASHCARDS_FAIL = 'flashcards/FETCH_CURRENT_FLASHCARDS_FAIL';
 
-export const FORM_MODE_CREATE = 'CREATE';
-export const FORM_MODE_UPDATE = 'UPDATE';
 
 const initialState = {
-  items: [],
-  currentItems: []
+  items: null,
+  currentItems: null,
+  mode: FORM_MODE_CREATE,
 };
 
 // Reducer
@@ -54,7 +54,10 @@ export default function flashcardsReducer(state = initialState, action) {
 export function fetchFlashcards() {
   return  {
     types: [FETCH_FLASHCARDS, FETCH_FLASHCARDS_SUCCESS, FETCH_FLASHCARDS_FAIL],
-    promise: client => client.get('/api/flashcards')
+    promise: client => client.get('/api/flashcards'),
+    afterSuccess: (dispatch, getState, response) => {
+      browserHistory.push('/');
+    }
   };
 }
 

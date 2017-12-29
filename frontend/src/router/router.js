@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect, IndexRoute } from 'react-router';
 import App from '../ui/container/App';
-import FlashcardSets from '../ui/container/FlashcardSetsPage';
+import HomePage from '../ui/container/HomePage';
 import UserProfile from '../ui/container/UserProfile';
 import LoginPage from '../ui/container/LoginPage';
 import RegisterPage from '../ui/container/RegisterPage';
@@ -11,7 +11,7 @@ import privateRoute from './privateRoute';
 
 export default (onLogout) => (
   <Route path="/" name="app" component={App}>
-    <IndexRoute component={privateRoute(FlashcardSets)}/>
+    <IndexRoute component={privateRoute(HomePage)}/>
     <Route path="profile" component={privateRoute(UserProfile)}/>
     <Route path="register" component={RegisterPage}/>
     <Route path="login" component={LoginPage}/>

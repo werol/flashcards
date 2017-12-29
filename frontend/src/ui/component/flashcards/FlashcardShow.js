@@ -29,10 +29,12 @@ export default class FlashcardShow extends Component {
     const {set, loading} = this.props;
     return (
       <div className="flashcard-show" >
+
         <div>
           {
             set.name && !loading ?
               <div>
+                <h4>{this.state.currentIndex + 1} / {set.flashcards.length}</h4>
                 <div className="left-arrow" onClick={this.previousCard.bind(this)}>
                   <span className="glyphicon glyphicon-chevron-left"/>
                 </div>

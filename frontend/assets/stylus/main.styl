@@ -13,7 +13,7 @@ body
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
 
-h1
+h1, h3, h4
   color #fff
   text-align center
 
@@ -133,20 +133,26 @@ input
   .tile
     display flex
     width 200px
+    height 200px
     box-shadow 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
     justify-content center
     align-items center
     position relative
+    background-color #9CCC65
 
-    a
-      margin 0
+    .config
+      display inline-flex
       position absolute
       right 0
       top 0
 
+      a
+        margin 0
+
       span
         padding 5px
         font-size 18px
+        z-index 1
     p
       font-size 25px
 

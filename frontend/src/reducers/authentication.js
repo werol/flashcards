@@ -85,7 +85,7 @@ export function displayAuthError(message) {
 export function login(username, password) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/api/session', {username, password}),
+    promise: client => client.post('/api/session', {username, password}),
     afterSuccess: (dispatch, getState, response) => {
       localStorage.setItem('auth-token', response.headers['x-auth-token']);
       const routingState = getState().routing.locationBeforeTransitions.state || {};
@@ -97,7 +97,7 @@ export function login(username, password) {
 export function logout() {
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
-    promise: (client) => client.delete('/api/session'),
+    promise: client => client.delete('/api/session'),
     afterSuccess: () => {
       browserHistory.push('/login');
     }
@@ -107,7 +107,7 @@ export function logout() {
 export function getSession() {
   return {
     types: [GET_SESSION, GET_SESSION_SUCCESS, GET_SESSION_FAIL],
-    promise: (client) => client.get('/api/session')
+    promise: client => client.get('/api/session')
   };
 }
 

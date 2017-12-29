@@ -17,9 +17,6 @@ public class FlashcardController {
   @Autowired
   private FlashcardSetService flashcardSetService;
 
-  @Autowired
-  private FlashcardService flashcardService;
-
   @RequestMapping(method=GET, path="/api/flashcards")
   public ResponseEntity<List<FlashcardSet>> getAllFlashcardSets() {
     return new ResponseEntity<>(flashcardSetService.findAll(), HttpStatus.OK);

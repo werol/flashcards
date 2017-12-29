@@ -49,7 +49,7 @@ let FlashcardsForm = props => {
   return (
     <div className="flashcard-form-page">
       <div className="flashcard-form-container">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <Field
             name="name"
             type="text"
