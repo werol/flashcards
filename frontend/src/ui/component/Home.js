@@ -33,8 +33,7 @@ export default class Home extends Component {
               <div>
                 {
                   this.props.items.map((item, index) => (
-                  <Link to={`/show-set/${item.setId}`}>
-                    <div className="tile" style={{  background: getColor(index) }}>
+                    <div className="tile-container" key={item.setId}>
                       <div className="config">
                         <Link to={'/flashcards-form'} onClick={this.handleFetchingCurrentFlashcards.bind(this, item.setId)}>
                           <p><span className="glyphicon glyphicon-pencil"/></p>
@@ -43,13 +42,17 @@ export default class Home extends Component {
                           <span className="glyphicon glyphicon-trash"/>
                         </p>
                       </div>
-                      <p>
-                        {item.name}
-                      </p>
+                      <Link to={`/show-set/${item.setId}`}>
+                        <div className="tile" style={{  background: getColor(index) }}>
+                          <p>
+                            {item.name}
+                          </p>
+                        </div>
+                      </Link>
                     </div>
-                  </Link>
                     ))
                 }
+                <div className="tile-container">
                   <Link to={'/flashcards-form'}>
                     <div className="tile">
                       <p>
@@ -58,6 +61,7 @@ export default class Home extends Component {
                     </div>
                   </Link>
                 </div>
+              </div>
             : ""
           }
         </div>

@@ -13,7 +13,7 @@ body
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
 
-h1, h3, h4
+h1, h3
   color #fff
   text-align center
 
@@ -124,21 +124,10 @@ input
 .flashcard-sets-grid
   text-align center
 
-  a
+  .tile-container
     display inline-block
-    color #fff
-    margin 50px
-    text-decoration none
-
-  .tile
-    display flex
-    width 200px
-    height 200px
-    box-shadow 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
-    justify-content center
-    align-items center
     position relative
-    background-color #9CCC65
+    margin 50px
 
     .config
       display inline-flex
@@ -146,15 +135,28 @@ input
       right 0
       top 0
 
-      a
-        margin 0
-
       span
         padding 5px
         font-size 18px
-        z-index 1
-    p
-      font-size 25px
+        color #fff
+        cursor pointer
+
+    a
+      display inline-block
+      color #fff
+      text-decoration none
+
+    .tile
+      display flex
+      box-shadow 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
+      width 200px
+      height 200px
+      justify-content center
+      align-items center
+      background-color #9CCC65
+
+      p
+        font-size 25px
 
 .flashcard-show
   text-align center
