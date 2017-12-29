@@ -32,7 +32,7 @@ export default class FlashcardShow extends Component {
 
         <div>
           {
-            set.name && !loading ?
+            set && !loading ?
               <div>
                 <h4>{this.state.currentIndex + 1} / {set.flashcards.length}</h4>
                 <div className="left-arrow" onClick={this.previousCard.bind(this)}>
