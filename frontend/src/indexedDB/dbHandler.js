@@ -48,6 +48,21 @@ export function putData(name, data) {
   });
 }
 
+export function getAllData(name) {
+  return new Promise((resolve, reject) => {
+    IndexedDB(dbName, version, {
+      success: function(event) {
+        const _this = this;
+        const store = this.getObjectStore(name);
+        store.getAll(function(event){
+          _this.close();
+          resolve(event.target.result);
+        });
+      }
+    });
+  });
+}
+
 export function getAllKeys(name) {
   return new Promise((resolve, reject) => {
     IndexedDB(dbName, version, {
