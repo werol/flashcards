@@ -1,14 +1,12 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
-import {getColor, INDEXED_DB_OBJECT_STORE_NAME, INDEXED_DB_OBJECT_STORE_KEY_PATH} from "../constants/constants";
-import {initDb} from "../../indexedDB/dbHandler";
+import {getColor} from "../constants/constants";
 
 export default class Home extends Component {
 
   constructor(props) {
     super(props);
     this.props.fetchFlashcards();
-    initDb(INDEXED_DB_OBJECT_STORE_NAME, INDEXED_DB_OBJECT_STORE_KEY_PATH);
   }
 
   handleFetchingCurrentFlashcards(setId) {

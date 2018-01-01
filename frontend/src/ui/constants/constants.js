@@ -3,7 +3,6 @@ import { FormFieldBuilder } from "../component/forms/FormFieldBuilder";
 export const MENU_FOR_USER = [
   {label: 'Home', link: '/'},
   {label: 'Logout', link: '/logout'},
-  {label: 'Profile', link: '/profile'}
 ];
 
 export const MENU_FOR_GUEST = [
@@ -57,7 +56,9 @@ const FORM_FIELDS = new Map([
   ]
 ]);
 
-const COLORS = ['#EC407A', '#EF5350', '#AB47BC', '#7E57C2', '#5C6BC0', '#42A5F5', '#29B6F6', '#26C6DA', '#26A69A', '#66BB6A', '#9CCC65', '#EF6C00'];
+//const COLORS = ['#EC407A', '#EF5350', '#AB47BC', '#7E57C2', '#5C6BC0', '#42A5F5', '#29B6F6', '#26C6DA', '#26A69A', '#66BB6A', '#9CCC65', '#EF6C00'];
+
+const COLORS = ['#ffb3ba', '#ffdfba', '#bae1ff'];
 
 export const getColor = number => COLORS[number % COLORS.length];
 
