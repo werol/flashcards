@@ -1,13 +1,21 @@
 import Home from '../component/Home';
 import {connect} from 'react-redux';
-import {fetchFlashcards, fetchCurrentFlashcards} from '../../reducers/flashcards';
-import {deleteFlashcards} from "../../reducers/flashcardsDelete";
+import {
+  fetchFlashcards, fetchCurrentFlashcards, setFlashcards, setCurrentFlashcards,
+  startGettingFlashcards, startGettingCurrentFlashcards
+} from '../../reducers/flashcards';
+import {deleteFlashcards, deleteFlashcardsFromIndexedDBSuccess} from "../../reducers/flashcardsDelete";
 
 export default connect(
   state => ({items: state.flashcards.items}),
   {
     fetchFlashcards,
+    startGettingFlashcards,
+    setFlashcards,
     fetchCurrentFlashcards,
-    deleteFlashcards
+    startGettingCurrentFlashcards,
+    setCurrentFlashcards,
+    deleteFlashcards,
+    deleteFlashcardsFromIndexedDBSuccess
   }
 )(Home);

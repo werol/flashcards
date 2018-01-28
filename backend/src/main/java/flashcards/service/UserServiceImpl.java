@@ -38,13 +38,4 @@ public class UserServiceImpl implements UserService {
     return userRepository.save(user);
   }
 
-  @Override
-  public User updateUser(UserDTO userDTO) {
-    User updatedUser = userRepository.findByUsername(userDTO.getUsername());
-    updatedUser.setFirstName(userDTO.getFirstName());
-    updatedUser.setLastName(userDTO.getLastName());
-    updatedUser.setEmail(userDTO.getEmail());
-    updatedUser.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-    return userRepository.save(updatedUser);
-  }
 }

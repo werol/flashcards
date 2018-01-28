@@ -32,7 +32,10 @@ export function deleteFlashcards(setId) {
     promise: client => client.delete(`/api/flashcards/${setId}`),
     afterSuccess: (dispatch, getState, response) => {
       dispatch(fetchFlashcards());
-      deleteData(INDEXED_DB_OBJECT_STORE_NAME, setId);
     }
   };
+}
+
+export function deleteFlashcardsFromIndexedDBSuccess() {
+  return {type: DELETE_FLASHCARDS_SUCCESS};
 }

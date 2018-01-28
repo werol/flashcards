@@ -56,8 +56,6 @@ const FORM_FIELDS = new Map([
   ]
 ]);
 
-//const COLORS = ['#EC407A', '#EF5350', '#AB47BC', '#7E57C2', '#5C6BC0', '#42A5F5', '#29B6F6', '#26C6DA', '#26A69A', '#66BB6A', '#9CCC65', '#EF6C00'];
-
 const COLORS = ['#ffb3ba', '#ffdfba', '#bae1ff'];
 
 export const getColor = number => COLORS[number % COLORS.length];
@@ -67,3 +65,6 @@ export const INDEXED_DB_OBJECT_STORE_KEY_PATH = 'setId';
 
 export const FORM_MODE_CREATE = 'CREATE';
 export const FORM_MODE_UPDATE = 'UPDATE';
+
+export const OFFLINE = 'OFFLINE';
+export const ONLINE = 'ONLINE';

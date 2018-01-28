@@ -1,4 +1,7 @@
 import React, {Component} from "react";
+import {INDEXED_DB_OBJECT_STORE_NAME, OFFLINE, ONLINE} from "../../constants/constants";
+import {getData} from "../../../indexedDB/dbHandler";
+import {getStrategy} from "../../utils";
 
 export default class FlashcardShow extends Component {
 
@@ -10,7 +13,21 @@ export default class FlashcardShow extends Component {
     };
 
     const setId = this.props.params.setId;
-    this.props.fetchCurrentFlashcards(setId);
+    this.handleGettingCurrentFlashcards(getStrategy(), parseFloat(setId));
+  }
+
+  handleGettingCurrentFlashcards(strategy, setId) {
+    const getCurrentFlashcardsActions = {
+      [OFFLINE] : () => {
+        this.props.startGettingCurrentFlashcards();
+        getData(INDEXED_DB_OBJECT_STORE_NAME, setId)
+          .then(result => {
+            this.props.setCurrentFlashcards({data: result})
+          })
+      },
+      [ONLINE] : () => this.props.fetchCurrentFlashcards(setId)
+    };
+    return getCurrentFlashcardsActions[strategy]();
   }
 
   previousCard(){

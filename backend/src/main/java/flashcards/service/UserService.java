@@ -13,7 +13,4 @@ public interface UserService {
 
   User createUser(UserDTO userDTO);
 
-  User updateUser(UserDTO userDTO);
-
-
 }

@@ -19,5 +19,7 @@ public class FlashcardServiceImpl implements FlashcardService {
   }
 
   @Override
-  public void delete(Flashcard flashcard) { flashcardRepository.delete(flashcard); }
+  public void delete(Flashcard flashcard) {
+    flashcardRepository.delete(flashcard);
+  }
 }

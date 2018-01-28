@@ -63,6 +63,21 @@ export function getAllData(name) {
   });
 }
 
+export function getData(name, key) {
+  return new Promise((resolve, reject) => {
+    IndexedDB(dbName, version, {
+      success: function(event) {
+        const _this = this;
+        const store = this.getObjectStore(name);
+        store.get(key, function(event){
+          _this.close();
+          resolve(event.target.result);
+        });
+      }
+    });
+  });
+}
+
 export function getAllKeys(name) {
   return new Promise((resolve, reject) => {
     IndexedDB(dbName, version, {
@@ -78,12 +93,12 @@ export function getAllKeys(name) {
   });
 }
 
-export function deleteData(name, value) {
+export function deleteData(name, key) {
   return new Promise((resolve, reject) => {
     IndexedDB(dbName, version, {
       success: function(event) {
         const store = this.getObjectStore(name, true);
-        store.delete(value);
+        store.delete(key);
         this.close();
         resolve(true);
       }

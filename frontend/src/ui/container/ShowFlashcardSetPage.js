@@ -1,6 +1,6 @@
 import FlashcardShow from '../component/flashcards/FlashcardShow';
 import {connect} from 'react-redux';
-import {fetchCurrentFlashcards} from '../../reducers/flashcards';
+import {fetchCurrentFlashcards, setCurrentFlashcards, startGettingCurrentFlashcards} from '../../reducers/flashcards';
 
 export default connect(
   state => (
@@ -8,5 +8,9 @@ export default connect(
       set: state.flashcards.currentItems,
       loading: state.flashcards.loading
     }),
-  {fetchCurrentFlashcards}
+  {
+    fetchCurrentFlashcards,
+    startGettingCurrentFlashcards,
+    setCurrentFlashcards
+  }
 )(FlashcardShow);

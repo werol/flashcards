@@ -37,17 +37,9 @@ public class UserController {
     return ResponseEntity.ok(user);
   }
 
-  @RequestMapping(method=PUT, path="/api/users")
-  public @ResponseBody ResponseEntity<User> updateUser(@Valid @RequestBody UserDTO userDTO, HttpSession session) throws AccessingPrivateResourcesException {
-    UserSession userSession = (UserSession) session.getAttribute("user");
-    if (!userSession.getUsername().equals(userDTO.getUsername()))
-      throw new AccessingPrivateResourcesException("updateUser.error.accessDenied");
-    User updatedUser = userService.updateUser(userDTO);
-    return ResponseEntity.ok(updatedUser);
-  }
-
   @RequestMapping(method=GET, path="/api/users")
   public @ResponseBody Iterable<User> getAllUsers() {
     return userService.findAll();
   }
+
 }

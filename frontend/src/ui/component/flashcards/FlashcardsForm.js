@@ -1,7 +1,11 @@
 import React from 'react'
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import {connect} from 'react-redux';
-import {saveFlashcards} from "../../../reducers/flashcardsSave";
+import {saveFlashcards, saveFlashcardsToIndexedDBSuccess} from "../../../reducers/flashcardsSave";
+import {addData, getAllKeys, putData} from "../../../indexedDB/dbHandler";
+import { browserHistory } from 'react-router';
+import {INDEXED_DB_OBJECT_STORE_NAME, OFFLINE, ONLINE} from "../../constants/constants";
+import {getStrategy} from "../../utils";
 
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
@@ -70,8 +74,25 @@ let FlashcardsForm = props => {
 
 const submit = (values, dispatch) => {
   window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-  return dispatch(saveFlashcards(values));
+  return handleSavingFlashcards(getStrategy(), values, dispatch);
 
+};
+
+const handleSavingFlashcards = (strategy, values, dispatch) => {
+  const saveFlashcardsActions = {
+    [OFFLINE] : () => {
+      values.setId ?
+        putData(INDEXED_DB_OBJECT_STORE_NAME, values)
+          .then(browserHistory.push('/'))
+      : getAllKeys(INDEXED_DB_OBJECT_STORE_NAME).then(result => {
+          addData(INDEXED_DB_OBJECT_STORE_NAME, {...values, setId: parseFloat(`${parseInt(result[result.length - 1] + 1)}.1`)});
+          dispatch(saveFlashcardsToIndexedDBSuccess());
+          browserHistory.push('/');
+        });
+    },
+    [ONLINE] : () => dispatch(saveFlashcards(values))
+  };
+  return saveFlashcardsActions[strategy]();
 };
 
 FlashcardsForm = reduxForm({

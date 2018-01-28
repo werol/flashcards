@@ -3,6 +3,9 @@
 theme_dark = #d6a4a4
 theme_light = #dae2f8
 
+html
+  min-width 865px
+
 body
   background theme_dark
   background -webkit-linear-gradient(right, theme_dark, theme_light)
@@ -195,3 +198,13 @@ input
 
   .flashcard:hover
     transform rotateY(180deg)
+
+#status
+  position fixed
+  bottom 0
+  color white
+  font-weight bolder
+  background-color theme_dark
+  border-radius 4px
+  margin 5px
+  padding 5px

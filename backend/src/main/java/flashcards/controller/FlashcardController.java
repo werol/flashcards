@@ -22,9 +22,9 @@ public class FlashcardController {
     return new ResponseEntity<>(flashcardSetService.findAll(), HttpStatus.OK);
   }
 
-  @RequestMapping(method=GET, path="/api/flashcards/{set_id}")
-  public ResponseEntity<FlashcardSet> getFlashcardSetById(@PathVariable long set_id) {
-    FlashcardSet flashcardSet = flashcardSetService.findBySetId(set_id);
+  @RequestMapping(method=GET, path="/api/flashcards/{setId}")
+  public ResponseEntity<FlashcardSet> getFlashcardSetById(@PathVariable long setId) {
+    FlashcardSet flashcardSet = flashcardSetService.findBySetId(setId);
     if (flashcardSet != null) {
       return new ResponseEntity<>(flashcardSet, HttpStatus.OK);
     } else {

@@ -68,6 +68,23 @@ export function fetchFlashcards() {
   };
 }
 
+
+export function setFlashcards(result) {
+  return {type: FETCH_FLASHCARDS_SUCCESS, result};
+}
+
+export function setCurrentFlashcards(result) {
+  return {type: FETCH_CURRENT_FLASHCARDS_SUCCESS, result};
+}
+
+export function startGettingFlashcards() {
+  return {type: FETCH_FLASHCARDS};
+}
+
+export function startGettingCurrentFlashcards() {
+  return {type: FETCH_CURRENT_FLASHCARDS};
+}
+
 export function fetchCurrentFlashcards(setId) {
   return  {
     types: [FETCH_CURRENT_FLASHCARDS, FETCH_CURRENT_FLASHCARDS_SUCCESS, FETCH_CURRENT_FLASHCARDS_FAIL],

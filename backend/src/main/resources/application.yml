@@ -1,5 +1,0 @@
-spring.devtools.livereload.enabled: false
-
----
-spring:
-    profiles: production

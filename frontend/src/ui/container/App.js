@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { connect } from "react-redux";
 import { getSession } from "../../reducers/authentication";
 import "stylus/main.styl";
-import {MENU_FOR_GUEST, MENU_FOR_USER} from "../constants/constants";
+import {MENU_FOR_GUEST, MENU_FOR_USER, OFFLINE, ONLINE} from "../constants/constants";
 
 
 const TopMenu = (props) => {
@@ -23,10 +23,20 @@ const TopMenu = (props) => {
   );
 };
 
+const updateOnlineStatus = () => {
+  document.getElementById("status").innerHTML = ONLINE;
+};
+
+const updateOfflineStatus = () => {
+  document.getElementById("status").innerHTML = OFFLINE;
+};
+
 export class App extends Component {
 
   componentDidMount() {
     this.props.getSession();
+    window.addEventListener('online',  updateOnlineStatus);
+    window.addEventListener('offline', updateOfflineStatus);
   }
 
   render() {
@@ -37,6 +47,7 @@ export class App extends Component {
       <div id="application">
         <TopMenu items={menuItems}/>
         {this.props.children}
+        <span id="status">{ONLINE}</span>
       </div>
     );
   }
