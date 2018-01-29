@@ -34,11 +34,13 @@ export class App extends Component {
 
   componentDidMount() {
     this.props.getSession();
-    window.addEventListener('online',  this.updateOnlineStatus.bind(this, this.props.synchronizeFlashcards));
+    const {synchronizeFlashcards} = this.props;
+    const _this = this;
+    window.addEventListener('online',  this.updateOnlineStatus.bind(this, synchronizeFlashcards, _this));
     window.addEventListener('offline', this.updateOfflineStatus);
   }
 
-  updateOnlineStatus(synchronizeFlashcards) {
+  updateOnlineStatus(synchronizeFlashcards, _that) {
     document.getElementById("status").innerHTML = ONLINE;
     getAllData(INDEXED_DB_OBJECT_STORE_NAME)
       .then(result => {
@@ -47,7 +49,7 @@ export class App extends Component {
           const isSetIdInteger = setId % 1 === 0;
           return {...flashcardSet, setId: isSetIdInteger ? setId : null}
         });
-        synchronizeFlashcards(flashcardSets);
+        synchronizeFlashcards(flashcardSets, _that.props.version);
       });
   };
 
@@ -56,7 +58,7 @@ export class App extends Component {
   };
 
   render() {
-    const {isAuthenticated, success, setsNotSynchronized} = this.props;
+    const {isAuthenticated, success, setsNotSynchronized, version} = this.props;
     const menuItems = isAuthenticated ? MENU_FOR_USER : MENU_FOR_GUEST;
 
     return (
@@ -66,7 +68,7 @@ export class App extends Component {
         {
           success &&
           setsNotSynchronized.length ?
-            <AcceptVersionModal setsNotSynchronized={setsNotSynchronized}/>
+            <AcceptVersionModal setsNotSynchronized={setsNotSynchronized} version={version}/>
             : null
         }
         <span id="status">{ONLINE}</span>
@@ -80,6 +82,7 @@ export default connect(
     {
       isAuthenticated: state.authentication.isAuthenticated,
       setsNotSynchronized: state.synchronize.setsNotSynchronized,
+      version: state.flashcards.version,
       success: state.synchronize.success
     }),
   {getSession, synchronizeFlashcards}

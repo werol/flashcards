@@ -1,5 +1,6 @@
 package flashcards.service;
 
+import flashcards.dto.FlashcardSetsDTO;
 import flashcards.model.FlashcardSet;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface FlashcardSetService {
 
   void delete(FlashcardSet flashcardSet);
 
-  List<FlashcardSet> synchronize(List<FlashcardSet> flashcardSetList);
+  FlashcardSetsDTO synchronize(FlashcardSetsDTO flashcardSets);
 }

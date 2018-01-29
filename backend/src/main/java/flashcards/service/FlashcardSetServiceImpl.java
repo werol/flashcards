@@ -1,5 +1,6 @@
 package flashcards.service;
 
+import flashcards.dto.FlashcardSetsDTO;
 import flashcards.model.FlashcardSet;
 import flashcards.repository.FlashcardSetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +42,14 @@ public class FlashcardSetServiceImpl implements FlashcardSetService {
   }
 
   @Override
-  public List<FlashcardSet> synchronize(List<FlashcardSet> flashcardSetList) {
-    handleDelete(flashcardSetList);
-    return handleAddAndUpdate(flashcardSetList);
+  public FlashcardSetsDTO synchronize(FlashcardSetsDTO flashcardSets) {
+    handleDelete(flashcardSets);
+    return handleAddAndUpdate(flashcardSets);
   }
 
-  private void handleDelete(List<FlashcardSet> flashcardSetList) {
+  private void handleDelete(FlashcardSetsDTO flashcardSets) {
     List<Long> setIdsRequest =
-      flashcardSetList
+      flashcardSets.getFlashcardSets()
         .stream()
         .map(FlashcardSet::getSetId)
         .collect(Collectors.toList());
@@ -58,14 +59,17 @@ public class FlashcardSetServiceImpl implements FlashcardSetService {
         .map(FlashcardSet::getSetId)
         .collect(Collectors.toList());
     setIdsDB.removeAll(setIdsRequest);
-    setIdsDB.forEach(setId -> delete(findBySetId(setId)));
+    setIdsDB.forEach(setId -> {
+      if (findBySetId(setId).getLastModified().before(flashcardSets.getVersion()))
+        delete(findBySetId(setId));
+    });
   }
 
-  private List<FlashcardSet> handleAddAndUpdate(List<FlashcardSet> flashcardSetList) {
+  private FlashcardSetsDTO handleAddAndUpdate(FlashcardSetsDTO flashcardSets) {
     List<FlashcardSet> flashcardSetsWithConflicts = new ArrayList<>();
-    flashcardSetList.forEach(set -> {
+    Timestamp currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+    flashcardSets.getFlashcardSets().forEach(set -> {
       try {
-        Timestamp currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
         if (set.getLastModified() == null) set.setLastModified(currentTimestamp);
         flashcardSetRepository.save(set);
       } catch (ObjectOptimisticLockingFailureException e) {
@@ -73,7 +77,7 @@ public class FlashcardSetServiceImpl implements FlashcardSetService {
         flashcardSetsWithConflicts.add(versionFromDB);
       }
     });
-    return flashcardSetsWithConflicts;
+    return new FlashcardSetsDTO(flashcardSetsWithConflicts, currentTimestamp);
   }
 
 }

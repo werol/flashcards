@@ -37,7 +37,7 @@ class AcceptVersionModal extends Component {
     const {currentIndex, acceptedSets} = this.state;
     const version = setsNotSynchronized[currentIndex].version;
     if (setsNotSynchronized.length === currentIndex + 1) {
-      synchronizeFlashcards(acceptedSets.concat([{...set, version: version}]));
+      synchronizeFlashcards(acceptedSets.concat([{...set, version: version}]), this.props.version);
       fetchFlashcards();
     } else {
       this.getLocalVersion(currentIndex + 1);
@@ -51,7 +51,7 @@ class AcceptVersionModal extends Component {
     const {synchronizeFlashcards, setsNotSynchronized, fetchFlashcards} = this.props;
     const {currentIndex, acceptedSets} = this.state;
     if (setsNotSynchronized.length === currentIndex + 1) {
-      synchronizeFlashcards(acceptedSets.concat([setsNotSynchronized[currentIndex]]));
+      synchronizeFlashcards(acceptedSets.concat([setsNotSynchronized[currentIndex]]), this.props.version);
       fetchFlashcards();
     } else {
       this.getLocalVersion(currentIndex + 1);

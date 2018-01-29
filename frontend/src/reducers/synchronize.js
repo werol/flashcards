@@ -1,3 +1,5 @@
+import {fetchFlashcards} from "./flashcards";
+
 const SYNCHRONIZE_FLASHCARDS = 'SYNCHRONIZE_FLASHCARDS';
 const SYNCHRONIZE_FLASHCARDS_SUCCESS = 'SYNCHRONIZE_FLASHCARDS_SUCCESS';
 const SYNCHRONIZE_FLASHCARDS_FAIL = 'SYNCHRONIZE_FLASHCARDS_FAIL';
@@ -30,12 +32,14 @@ export default function flashcardsSynchronizeReducer(state = initialState, actio
 
 // Actions
 
-export function synchronizeFlashcards(records) {
+export function synchronizeFlashcards(records, version) {
   return  {
     types: [SYNCHRONIZE_FLASHCARDS, SYNCHRONIZE_FLASHCARDS_SUCCESS, SYNCHRONIZE_FLASHCARDS_FAIL],
-    promise: client => client.post('/api/synchronize', records),
+    promise: client => client.post('/api/synchronize', {flashcardSets: records, version: version}),
     afterSuccess: (dispatch, getState, response) => {
-      console.log(response);
+      if (!response.data.flashcardSets.length) {
+        dispatch(fetchFlashcards());
+      }
     }
   };
 }

@@ -7,6 +7,7 @@ import {addData, clearData, initDb} from "../indexedDB/dbHandler";
 
 const FETCH_FLASHCARDS = 'flashcards/FETCH_FLASHCARDS';
 const FETCH_FLASHCARDS_SUCCESS = 'flashcards/FETCH_FLASHCARDS_SUCCESS';
+const SET_FLASHCARDS = 'flashcards/SET_FLASHCARDS';
 const FETCH_FLASHCARDS_FAIL = 'flashcards/FETCH_FLASHCARDS_FAIL';
 
 const FETCH_CURRENT_FLASHCARDS = 'flashcards/FETCH_CURRENT_FLASHCARDS';
@@ -18,6 +19,7 @@ const initialState = {
   items: null,
   currentItems: null,
   mode: FORM_MODE_CREATE,
+  version: null
 };
 
 // Reducer
@@ -30,6 +32,14 @@ export default function flashcardsReducer(state = initialState, action) {
         loading: true
       };
     case FETCH_FLASHCARDS_SUCCESS:
+      return {
+        ...state,
+        items: action.result.data.flashcardSets,
+        version: action.result.data.version,
+        mode: FORM_MODE_CREATE,
+        loading: false
+      };
+    case SET_FLASHCARDS:
       return {
         ...state,
         items: action.result.data,
@@ -63,14 +73,14 @@ export function fetchFlashcards() {
       browserHistory.push('/');
       initDb(INDEXED_DB_OBJECT_STORE_NAME, INDEXED_DB_OBJECT_STORE_KEY_PATH);
       clearData(INDEXED_DB_OBJECT_STORE_NAME);
-      addData(INDEXED_DB_OBJECT_STORE_NAME, response.data)
+      addData(INDEXED_DB_OBJECT_STORE_NAME, response.data.flashcardSets)
     }
   };
 }
 
 
 export function setFlashcards(result) {
-  return {type: FETCH_FLASHCARDS_SUCCESS, result};
+  return {type: SET_FLASHCARDS, result};
 }
 
 export function setCurrentFlashcards(result) {

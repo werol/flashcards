@@ -1,5 +1,6 @@
 package flashcards.controller;
 
+import flashcards.dto.FlashcardSetsDTO;
 import flashcards.model.FlashcardSet;
 import flashcards.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -18,8 +21,10 @@ public class FlashcardController {
   private FlashcardSetService flashcardSetService;
 
   @RequestMapping(method=GET, path="/api/flashcards")
-  public ResponseEntity<List<FlashcardSet>> getAllFlashcardSets() {
-    return new ResponseEntity<>(flashcardSetService.findAll(), HttpStatus.OK);
+  public ResponseEntity<FlashcardSetsDTO> getAllFlashcardSets() {
+    Timestamp currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+    FlashcardSetsDTO flashcardSetsDTO = new FlashcardSetsDTO(flashcardSetService.findAll(), currentTimestamp);
+    return new ResponseEntity<>(flashcardSetsDTO, HttpStatus.OK);
   }
 
   @RequestMapping(method=GET, path="/api/flashcards/{setId}")
@@ -38,7 +43,7 @@ public class FlashcardController {
   }
 
   @RequestMapping(method=POST, path="/api/synchronize")
-  public ResponseEntity<List<FlashcardSet>> synchronizeFlashcardSets(@RequestBody List<FlashcardSet> flashcardSetList) {
+  public ResponseEntity<FlashcardSetsDTO> synchronizeFlashcardSets(@RequestBody FlashcardSetsDTO flashcardSetList) {
     return new ResponseEntity<>(flashcardSetService.synchronize(flashcardSetList), HttpStatus.OK);
   }
 
