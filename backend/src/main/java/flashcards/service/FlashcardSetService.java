@@ -13,4 +13,6 @@ public interface FlashcardSetService {
   FlashcardSet save(FlashcardSet flashcardSet);
 
   void delete(FlashcardSet flashcardSet);
+
+  List<FlashcardSet> synchronize(List<FlashcardSet> flashcardSetList);
 }

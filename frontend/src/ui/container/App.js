@@ -3,7 +3,10 @@ import { Link } from "react-router";
 import { connect } from "react-redux";
 import { getSession } from "../../reducers/authentication";
 import "stylus/main.styl";
-import {MENU_FOR_GUEST, MENU_FOR_USER, OFFLINE, ONLINE} from "../constants/constants";
+import {INDEXED_DB_OBJECT_STORE_NAME, MENU_FOR_GUEST, MENU_FOR_USER, OFFLINE, ONLINE} from "../constants/constants";
+import {synchronizeFlashcards} from "../../reducers/synchronize";
+import {getAllData} from "../../indexedDB/dbHandler";
+import AcceptVersionModal from "../component/AcceptVersionModal";
 
 
 const TopMenu = (props) => {
@@ -23,30 +26,49 @@ const TopMenu = (props) => {
   );
 };
 
-const updateOnlineStatus = () => {
-  document.getElementById("status").innerHTML = ONLINE;
-};
-
-const updateOfflineStatus = () => {
-  document.getElementById("status").innerHTML = OFFLINE;
-};
-
 export class App extends Component {
+
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
     this.props.getSession();
-    window.addEventListener('online',  updateOnlineStatus);
-    window.addEventListener('offline', updateOfflineStatus);
+    window.addEventListener('online',  this.updateOnlineStatus.bind(this, this.props.synchronizeFlashcards));
+    window.addEventListener('offline', this.updateOfflineStatus);
   }
 
+  updateOnlineStatus(synchronizeFlashcards) {
+    document.getElementById("status").innerHTML = ONLINE;
+    getAllData(INDEXED_DB_OBJECT_STORE_NAME)
+      .then(result => {
+        const flashcardSets = result.map(flashcardSet => {
+          const setId = flashcardSet.setId;
+          const isSetIdInteger = setId % 1 === 0;
+          return {...flashcardSet, setId: isSetIdInteger ? setId : null}
+        });
+        synchronizeFlashcards(flashcardSets);
+      });
+  };
+
+  updateOfflineStatus() {
+    document.getElementById("status").innerHTML = OFFLINE;
+  };
+
   render() {
-    const {isAuthenticated} = this.props;
+    const {isAuthenticated, success, setsNotSynchronized} = this.props;
     const menuItems = isAuthenticated ? MENU_FOR_USER : MENU_FOR_GUEST;
 
     return (
       <div id="application">
         <TopMenu items={menuItems}/>
         {this.props.children}
+        {
+          success &&
+          setsNotSynchronized.length ?
+            <AcceptVersionModal setsNotSynchronized={setsNotSynchronized}/>
+            : null
+        }
         <span id="status">{ONLINE}</span>
       </div>
     );
@@ -54,6 +76,11 @@ export class App extends Component {
 }
 
 export default connect(
-  state => ({isAuthenticated: state.authentication.isAuthenticated}),
-  {getSession}
+  state => (
+    {
+      isAuthenticated: state.authentication.isAuthenticated,
+      setsNotSynchronized: state.synchronize.setsNotSynchronized,
+      success: state.synchronize.success
+    }),
+  {getSession, synchronizeFlashcards}
 )(App);

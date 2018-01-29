@@ -11,7 +11,7 @@ public class Flashcard implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO )
-  private long flashcardId;
+  private Long flashcardId;
 
   private String frontSide;
 
@@ -22,9 +22,9 @@ public class Flashcard implements Serializable {
   @JsonBackReference
   private FlashcardSet flashcardSet;
 
-  public long getFlashcardId() { return flashcardId; }
+  public Long getFlashcardId() { return flashcardId; }
 
-  public void setFlashcardId(int flashcardId) {
+  public void setFlashcardId(Long flashcardId) {
     this.flashcardId = flashcardId;
   }
 

@@ -208,3 +208,59 @@ input
   border-radius 4px
   margin 5px
   padding 5px
+
+.modal-container
+  position fixed
+  padding-top 6%
+  top 0
+  left 0
+  right 0
+  z-index 10
+
+  .content
+    position relative
+    z-index 1
+    background #ffffff
+    margin 0 auto 100px
+    padding 20px 20px 85px
+    text-align center
+    height 560px
+    width 860px
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
+
+    h2
+      margin-top 5px
+
+    .column
+      float left
+      width 50%
+      padding 1rem
+
+    .button-group
+      position absolute
+      bottom 20px
+      right 20px
+
+      button
+        border-left 2px solid #fff
+        width 145px
+
+    .flashcard-row > div.column
+      padding-top 0
+
+
+.content > div > div.column:nth-child(2)
+  border-left 1px solid #c9c9c9
+
+.content > div > div.column
+  height 450px
+  overflow-y scroll
+
+#cover
+  position fixed
+  top 0
+  left 0
+  background rgba(0,0,0,0.7)
+  z-index 5
+  width 100%;
+  height 100%

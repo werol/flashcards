@@ -73,7 +73,6 @@ let FlashcardsForm = props => {
 };
 
 const submit = (values, dispatch) => {
-  window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
   return handleSavingFlashcards(getStrategy(), values, dispatch);
 
 };
@@ -107,7 +106,8 @@ FlashcardsForm = connect(
         owner: state.authentication.username,
         name: state.flashcards.currentItems.name,
         flashcards: state.flashcards.currentItems.flashcards,
-        setId: state.flashcards.currentItems.setId
+        setId: state.flashcards.currentItems.setId,
+        version: state.flashcards.currentItems.version
       } :
       {
         owner: state.authentication.username,

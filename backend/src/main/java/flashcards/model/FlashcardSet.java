@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -13,23 +13,31 @@ public class FlashcardSet implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO )
-  private long setId;
+  private Long setId;
+
+  @Version
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date version;
 
   private String owner;
 
   private String name;
 
-  @OneToMany(cascade = {CascadeType.ALL}, mappedBy="flashcardSet", orphanRemoval=true)
+  @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="flashcardSet", orphanRemoval=true)
   @JsonManagedReference
-  private Set<Flashcard> flashcards = new HashSet<>();
+  private Set<Flashcard> flashcards;
 
-  public long getSetId() {
+  public Long getSetId() {
     return setId;
   }
 
-  public void setSetId(long setId) {
+  public void setSetId(Long setId) {
     this.setId = setId;
   }
+
+  public Date getVersion() { return version; }
+
+  public void setVersion(Date version) { this.version = version; }
 
   public String getOwner() {
     return this.owner;
@@ -54,4 +62,5 @@ public class FlashcardSet implements Serializable {
   public void setFlashcards(Set<Flashcard> flashcards) {
     this.flashcards = flashcards;
   }
+
 }

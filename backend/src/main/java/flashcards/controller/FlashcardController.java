@@ -37,6 +37,11 @@ public class FlashcardController {
     return new ResponseEntity<>(flashcardSetService.save(flashcardSet), HttpStatus.CREATED);
   }
 
+  @RequestMapping(method=POST, path="/api/synchronize")
+  public ResponseEntity<List<FlashcardSet>> synchronizeFlashcardSets(@RequestBody List<FlashcardSet> flashcardSetList) {
+    return new ResponseEntity<>(flashcardSetService.synchronize(flashcardSetList), HttpStatus.OK);
+  }
+
   @RequestMapping(method=DELETE, path="/api/flashcards/{setId}")
   public ResponseEntity<?> deleteFlashcardSetById(@PathVariable long setId) {
     FlashcardSet flashcardSet = flashcardSetService.findBySetId(setId);
