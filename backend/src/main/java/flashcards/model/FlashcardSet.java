@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -16,12 +16,13 @@ public class FlashcardSet implements Serializable {
   private Long setId;
 
   @Version
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date version;
+  private Long version;
 
   private String owner;
 
   private String name;
+
+  private Timestamp lastModified;
 
   @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="flashcardSet", orphanRemoval=true)
   @JsonManagedReference
@@ -35,9 +36,9 @@ public class FlashcardSet implements Serializable {
     this.setId = setId;
   }
 
-  public Date getVersion() { return version; }
+  public Long getVersion() { return version; }
 
-  public void setVersion(Date version) { this.version = version; }
+  public void setVersion(Long version) { this.version = version; }
 
   public String getOwner() {
     return this.owner;
@@ -63,4 +64,11 @@ public class FlashcardSet implements Serializable {
     this.flashcards = flashcards;
   }
 
+  public Timestamp getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Timestamp lastModified) {
+    this.lastModified = lastModified;
+  }
 }

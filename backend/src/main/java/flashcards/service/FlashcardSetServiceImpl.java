@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +30,8 @@ public class FlashcardSetServiceImpl implements FlashcardSetService {
 
   @Override
   public FlashcardSet save(FlashcardSet flashcardSet) {
+    Timestamp currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+    flashcardSet.setLastModified(currentTimestamp);
     return flashcardSetRepository.save(flashcardSet);
   }
 
@@ -63,7 +65,9 @@ public class FlashcardSetServiceImpl implements FlashcardSetService {
     List<FlashcardSet> flashcardSetsWithConflicts = new ArrayList<>();
     flashcardSetList.forEach(set -> {
       try {
-        save(set);
+        Timestamp currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+        if (set.getLastModified() == null) set.setLastModified(currentTimestamp);
+        flashcardSetRepository.save(set);
       } catch (ObjectOptimisticLockingFailureException e) {
         FlashcardSet versionFromDB = findBySetId(set.getSetId());
         flashcardSetsWithConflicts.add(versionFromDB);

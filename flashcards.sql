@@ -21,9 +21,10 @@ CREATE TABLE users (
 
 CREATE TABLE flashcard_sets (
   set_id        INTEGER(30)     NOT NULL AUTO_INCREMENT,
-  version       TIMESTAMP       NOT NULL,
+  version       INTEGER(30)     NOT NULL,
   owner         VARCHAR(30)     NOT NULL,
   name          VARCHAR(100)    NOT NULL,
+  last_modified TIMESTAMP       NOT NULL,
   PRIMARY KEY (set_id),
   FOREIGN KEY(owner) REFERENCES users(username)
 );

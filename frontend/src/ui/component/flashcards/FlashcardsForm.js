@@ -107,7 +107,8 @@ FlashcardsForm = connect(
         name: state.flashcards.currentItems.name,
         flashcards: state.flashcards.currentItems.flashcards,
         setId: state.flashcards.currentItems.setId,
-        version: state.flashcards.currentItems.version
+        version: state.flashcards.currentItems.version,
+        lastModified: state.flashcards.currentItems.lastModified
       } :
       {
         owner: state.authentication.username,
