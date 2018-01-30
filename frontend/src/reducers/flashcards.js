@@ -71,9 +71,11 @@ export function fetchFlashcards() {
     promise: client => client.get('/api/flashcards'),
     afterSuccess: (dispatch, getState, response) => {
       browserHistory.push('/');
-      INDEXED_DB_HANDLER_MODULE.initDb(INDEXED_DB_OBJECT_STORE_NAME, INDEXED_DB_OBJECT_STORE_KEY_PATH);
-      INDEXED_DB_HANDLER_MODULE.clearData(INDEXED_DB_OBJECT_STORE_NAME);
-      INDEXED_DB_HANDLER_MODULE.addData(INDEXED_DB_OBJECT_STORE_NAME, response.data.flashcardSets)
+      const {initDb, clearData, addData} = INDEXED_DB_HANDLER_MODULE;
+      initDb(INDEXED_DB_OBJECT_STORE_NAME, INDEXED_DB_OBJECT_STORE_KEY_PATH)
+        .then(clearData(INDEXED_DB_OBJECT_STORE_NAME))
+        .then(addData(INDEXED_DB_OBJECT_STORE_NAME, response.data.flashcardSets))
+
     }
   };
 }
