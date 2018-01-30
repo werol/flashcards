@@ -100,7 +100,7 @@ class AcceptVersionModal extends Component {
               <div className="column">
                 <h2>Local changes</h2>
                 {
-                  !this.props.loading && this.displaySet(this.props.set)
+                  this.props.set.name && this.displaySet(this.props.set)
                 }
               </div>
               <div className="column">
@@ -126,7 +126,6 @@ class AcceptVersionModal extends Component {
 export default connect(
   state => (
     {
-      loading: state.flashcards.loading,
       set: state.flashcards.currentItems,
     }),
   {
