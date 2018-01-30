@@ -32,6 +32,10 @@ export function deleteFlashcards(setId) {
     promise: client => client.delete(`/api/flashcards/${setId}`),
     afterSuccess: (dispatch, getState, response) => {
       dispatch(fetchFlashcards());
+    },
+    afterError: (dispatch, getState, response) => {
+      window.alert("Ups... The set has not been found!");
+      dispatch(fetchFlashcards());
     }
   };
 }

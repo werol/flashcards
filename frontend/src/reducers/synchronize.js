@@ -23,7 +23,7 @@ export default function flashcardsSynchronizeReducer(state = initialState, actio
       return {
         ...state,
         success: true,
-        setsNotSynchronized: action.result.data
+        setsNotSynchronized: action.result.data.flashcardSets
       };
     default:
       return state;

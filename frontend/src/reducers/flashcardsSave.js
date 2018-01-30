@@ -31,7 +31,7 @@ export function saveFlashcards(record) {
       browserHistory.push('/');
     },
     afterError: (dispatch, getState, response) => {
-      window.alert("Your version of this set is not up-to-date with remote database, " +
+      window.alert("Ups... Your version of this set is not up-to-date with remote database, " +
         "you will be redirect to the home page, your changes could not be saved!");
       browserHistory.push('/');
     }
