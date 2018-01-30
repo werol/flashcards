@@ -8,9 +8,10 @@ export default connect(
       set: state.flashcards.currentItems,
       loading: state.flashcards.loading
     }),
-  {
+  dispatch => ({
+    dispatch: dispatch,
     fetchCurrentFlashcards,
     startGettingCurrentFlashcards,
     setCurrentFlashcards
-  }
+  })
 )(FlashcardShow);

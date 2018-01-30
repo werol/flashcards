@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import {INDEXED_DB_OBJECT_STORE_NAME, OFFLINE, ONLINE} from "../../constants/constants";
 import {INDEXED_DB_HANDLER_MODULE} from "../../../indexedDB/dbHandler";
-import {getStrategy} from "../../utils";
+import {getStrategy} from "../../handlingIndexedDB/getStrategy";
+import {HandlingIndexedDBStrategy} from "../../handlingIndexedDB/HandlingIndexedDBStrategy";
 
 export default class FlashcardShow extends Component {
 
@@ -13,22 +14,15 @@ export default class FlashcardShow extends Component {
     };
 
     const setId = this.props.params.setId;
-    this.handleGettingCurrentFlashcards(getStrategy(), parseFloat(setId));
+    this.handlingIndexedDBStrategy = new HandlingIndexedDBStrategy(this.props.dispatch);
+    this.handleGettingCurrentFlashcards(parseFloat(setId));
   }
 
-  handleGettingCurrentFlashcards(strategy, setId) {
-    const getCurrentFlashcardsActions = {
-      [OFFLINE] : () => {
-        this.props.startGettingCurrentFlashcards();
-        INDEXED_DB_HANDLER_MODULE.getData(INDEXED_DB_OBJECT_STORE_NAME, setId)
-          .then(result => {
-            this.props.setCurrentFlashcards({data: result})
-          })
-      },
-      [ONLINE] : () => this.props.fetchCurrentFlashcards(setId)
-    };
-    return getCurrentFlashcardsActions[strategy]();
+  handleGettingCurrentFlashcards(setId) {
+    this.handlingIndexedDBStrategy.setStrategy(getStrategy());
+    this.handlingIndexedDBStrategy.getCurrentFlashcards(setId)
   }
+
 
   previousCard(){
     const {currentIndex} = this.state;

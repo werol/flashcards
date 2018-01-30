@@ -8,7 +8,8 @@ import {deleteFlashcards, deleteFlashcardsFromIndexedDBSuccess} from "../../redu
 
 export default connect(
   state => ({items: state.flashcards.items}),
-  {
+  dispatch => ({
+    dispatch: dispatch,
     fetchFlashcards,
     startGettingFlashcards,
     setFlashcards,
@@ -17,5 +18,5 @@ export default connect(
     setCurrentFlashcards,
     deleteFlashcards,
     deleteFlashcardsFromIndexedDBSuccess
-  }
+  })
 )(Home);

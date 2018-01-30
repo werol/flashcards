@@ -1,60 +1,37 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
-import {getColor, INDEXED_DB_OBJECT_STORE_NAME, OFFLINE, ONLINE} from "../constants/constants";
-import {INDEXED_DB_HANDLER_MODULE} from "../../indexedDB/dbHandler";
-import {getStrategy} from "../utils";
+import {getColor} from "../constants/constants";
+import {getStrategy} from "../handlingIndexedDB/getStrategy";
+import {HandlingIndexedDBStrategy} from "../handlingIndexedDB/HandlingIndexedDBStrategy";
 
 export default class Home extends Component {
 
   constructor(props) {
     super(props);
-    this.handleGettingAllFlashcards(getStrategy());
+    this.handlingIndexedDBStrategy = new HandlingIndexedDBStrategy(this.props.dispatch);
+    this.handleGettingAllFlashcards();
   }
 
-  handleGettingAllFlashcards(strategy) {
-    const getFlashcardsActions = {
-      [OFFLINE] : () => {
-        this.props.startGettingFlashcards();
-        INDEXED_DB_HANDLER_MODULE.getAllData(INDEXED_DB_OBJECT_STORE_NAME)
-          .then(result => this.props.setFlashcards({data: result}))
-      },
-      [ONLINE] : this.props.fetchFlashcards
-    };
-    return getFlashcardsActions[strategy]();
+  handleGettingAllFlashcards() {
+    this.handlingIndexedDBStrategy.setStrategy(getStrategy());
+    this.handlingIndexedDBStrategy.getAllFlashcards()
   }
 
-  handleGettingCurrentFlashcards(strategy, setId) {
-    const getCurrentFlashcardsActions = {
-      [OFFLINE] : () => {
-        this.props.startGettingCurrentFlashcards();
-        INDEXED_DB_HANDLER_MODULE.getData(INDEXED_DB_OBJECT_STORE_NAME, setId)
-        .then(result => {
-          this.props.setCurrentFlashcards({data: result})
-        })
-      },
-      [ONLINE] : () => this.props.fetchCurrentFlashcards(setId)
-    };
-    return getCurrentFlashcardsActions[strategy]();
+  handleGettingCurrentFlashcards(setId) {
+    this.handlingIndexedDBStrategy.setStrategy(getStrategy());
+    this.handlingIndexedDBStrategy.getCurrentFlashcards(setId)
   }
 
-  handleDeletingFlashcardSet(strategy, setId) {
-    const getCurrentFlashcardsActions = {
-      [OFFLINE] : () => {
-        INDEXED_DB_HANDLER_MODULE.deleteData(INDEXED_DB_OBJECT_STORE_NAME, setId);
-        this.props.deleteFlashcardsFromIndexedDBSuccess();
-        this.handleGettingAllFlashcards(strategy);
-      },
-      [ONLINE] : () => this.props.deleteFlashcards(setId)
-    };
-    return getCurrentFlashcardsActions[strategy]();
+  handleDeletingFlashcardSet(setId) {
+    this.handlingIndexedDBStrategy.setStrategy(getStrategy());
+    this.handlingIndexedDBStrategy.deleteFlashcardSet(setId)
   }
 
   openConfirmation(event, flashcardSet) {
     event.preventDefault();
     if (confirm(`Do you want to delete ${flashcardSet.name}?`))
-      this.handleDeletingFlashcardSet(getStrategy(), flashcardSet.setId);
+      this.handleDeletingFlashcardSet(flashcardSet.setId);
   }
-
 
   render() {
     const items = this.props.items;
@@ -69,7 +46,7 @@ export default class Home extends Component {
                   this.props.items.map((item, index) => (
                     <div className="tile-container" key={item.setId}>
                       <div className="config">
-                        <Link to={'/flashcards-form'} onClick={this.handleGettingCurrentFlashcards.bind(this, OFFLINE, item.setId)}>
+                        <Link to={'/flashcards-form'} onClick={this.handleGettingCurrentFlashcards.bind(this, item.setId)}>
                           <p><span className="glyphicon glyphicon-pencil"/></p>
                         </Link>
                         <p onClick={event => this.openConfirmation(event, item)} >
