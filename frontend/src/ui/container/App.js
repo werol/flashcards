@@ -37,11 +37,9 @@ export class App extends Component {
     const {synchronizeFlashcards} = this.props;
     const _this = this;
     window.addEventListener('online',  this.updateOnlineStatus.bind(this, synchronizeFlashcards, _this));
-    window.addEventListener('offline', this.updateOfflineStatus);
   }
 
   updateOnlineStatus(synchronizeFlashcards, _that) {
-    document.getElementById("status").innerHTML = ONLINE;
     INDEXED_DB_HANDLER_MODULE.getAllData(INDEXED_DB_OBJECT_STORE_NAME)
       .then(result => {
         const flashcardSets = result.map(flashcardSet => {
@@ -51,10 +49,6 @@ export class App extends Component {
         });
         synchronizeFlashcards(flashcardSets, _that.props.version);
       });
-  };
-
-  updateOfflineStatus() {
-    document.getElementById("status").innerHTML = OFFLINE;
   };
 
   render() {
@@ -71,7 +65,7 @@ export class App extends Component {
             <AcceptVersionModal setsNotSynchronized={setsNotSynchronized} version={version}/>
             : null
         }
-        <span id="status">{ONLINE}</span>
+        <span id="status">{window.navigator.onLine ? ONLINE : OFFLINE}</span>
       </div>
     );
   }

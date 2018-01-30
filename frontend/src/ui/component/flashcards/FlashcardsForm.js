@@ -3,13 +3,13 @@ import { Field, FieldArray, reduxForm } from 'redux-form'
 import {connect} from 'react-redux';
 import {getStrategy} from "../../handlingIndexedDB/getStrategy";
 import {HandlingIndexedDBStrategy} from "../../handlingIndexedDB/HandlingIndexedDBStrategy";
+import validate from './validate'
 
-
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
+const renderField = ({ input, label, type, meta: { touched, error }, errorClassName }) => (
   <div>
     <div>
       <input {...input} type={type} placeholder={label} />
-      {touched && error && <span>{error}</span>}
+      {touched && error && <div className={errorClassName}>{error}</div>}
     </div>
   </div>
 );
@@ -24,14 +24,20 @@ const renderFlashcard = ({ fields, meta: { error, submitFailed } }) => (
           type="text"
           component={renderField}
           label="front side"
+          errorClassName="input-error front-back-error"
         />
         <Field
           name={`${flashcard}.backSide`}
           type="text"
           component={renderField}
           label="back side"
+          errorClassName="input-error front-back-error"
         />
-        <button type="button" onClick={() => fields.remove(index)} >
+        <button type="button" onClick={() => {
+          if (fields.length > 1)
+            fields.remove(index)
+        }}
+        >
           <span className="glyphicon glyphicon-trash"/>
         </button>
       </div>
@@ -40,7 +46,6 @@ const renderFlashcard = ({ fields, meta: { error, submitFailed } }) => (
       <button type="button" onClick={() => fields.push({})} >
         <span className="glyphicon glyphicon-plus"/>
       </button>
-      {submitFailed && error && <span>{error}</span>}
     </div>
   </div>
 );
@@ -56,6 +61,7 @@ let FlashcardsForm = props => {
             type="text"
             component={renderField}
             label="flashcard set name"
+            errorClassName="input-error name-error"
           />
           <FieldArray name="flashcards" component={renderFlashcard} />
           <div className="save-btn">
@@ -82,7 +88,8 @@ const handleSavingFlashcards = (values, dispatch) => {
 
 FlashcardsForm = reduxForm({
   form: 'flashcardSet',
-  onSubmit: submit
+  onSubmit: submit,
+  validate
 })(FlashcardsForm);
 
 FlashcardsForm = connect(
