@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {INDEXED_DB_OBJECT_STORE_NAME, OFFLINE, ONLINE} from "../../constants/constants";
-import {getData} from "../../../indexedDB/dbHandler";
+import {INDEXED_DB_HANDLER_MODULE} from "../../../indexedDB/dbHandler";
 import {getStrategy} from "../../utils";
 
 export default class FlashcardShow extends Component {
@@ -20,7 +20,7 @@ export default class FlashcardShow extends Component {
     const getCurrentFlashcardsActions = {
       [OFFLINE] : () => {
         this.props.startGettingCurrentFlashcards();
-        getData(INDEXED_DB_OBJECT_STORE_NAME, setId)
+        INDEXED_DB_HANDLER_MODULE.getData(INDEXED_DB_OBJECT_STORE_NAME, setId)
           .then(result => {
             this.props.setCurrentFlashcards({data: result})
           })

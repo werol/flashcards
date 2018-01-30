@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 import {fetchFlashcards, setCurrentFlashcards, startGettingCurrentFlashcards} from "../../reducers/flashcards";
-import {getData} from "../../indexedDB/dbHandler";
+import {INDEXED_DB_HANDLER_MODULE} from "../../indexedDB/dbHandler";
 import {INDEXED_DB_OBJECT_STORE_NAME} from "../constants/constants";
 import {synchronizeFlashcards} from "../../reducers/synchronize";
 
@@ -18,7 +18,7 @@ class AcceptVersionModal extends Component {
 
   getLocalVersion(setId) {
     this.props.startGettingCurrentFlashcards();
-    getData(INDEXED_DB_OBJECT_STORE_NAME, this.props.setsNotSynchronized[setId].setId)
+    INDEXED_DB_HANDLER_MODULE.getData(INDEXED_DB_OBJECT_STORE_NAME, this.props.setsNotSynchronized[setId].setId)
       .then(result => {
         this.props.setCurrentFlashcards({data: result})
       });

@@ -3,7 +3,7 @@ import {
   FORM_MODE_CREATE, FORM_MODE_UPDATE, INDEXED_DB_OBJECT_STORE_KEY_PATH,
   INDEXED_DB_OBJECT_STORE_NAME
 } from "../ui/constants/constants";
-import {addData, clearData, initDb} from "../indexedDB/dbHandler";
+import {INDEXED_DB_HANDLER_MODULE} from "../indexedDB/dbHandler";
 
 const FETCH_FLASHCARDS = 'flashcards/FETCH_FLASHCARDS';
 const FETCH_FLASHCARDS_SUCCESS = 'flashcards/FETCH_FLASHCARDS_SUCCESS';
@@ -71,9 +71,9 @@ export function fetchFlashcards() {
     promise: client => client.get('/api/flashcards'),
     afterSuccess: (dispatch, getState, response) => {
       browserHistory.push('/');
-      initDb(INDEXED_DB_OBJECT_STORE_NAME, INDEXED_DB_OBJECT_STORE_KEY_PATH);
-      clearData(INDEXED_DB_OBJECT_STORE_NAME);
-      addData(INDEXED_DB_OBJECT_STORE_NAME, response.data.flashcardSets)
+      INDEXED_DB_HANDLER_MODULE.initDb(INDEXED_DB_OBJECT_STORE_NAME, INDEXED_DB_OBJECT_STORE_KEY_PATH);
+      INDEXED_DB_HANDLER_MODULE.clearData(INDEXED_DB_OBJECT_STORE_NAME);
+      INDEXED_DB_HANDLER_MODULE.addData(INDEXED_DB_OBJECT_STORE_NAME, response.data.flashcardSets)
     }
   };
 }

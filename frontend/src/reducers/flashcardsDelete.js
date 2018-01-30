@@ -1,7 +1,4 @@
-import { browserHistory } from 'react-router';
 import {fetchFlashcards} from "./flashcards";
-import {INDEXED_DB_OBJECT_STORE_NAME} from "../ui/constants/constants";
-import {deleteData} from "../indexedDB/dbHandler";
 const DELETE_FLASHCARDS = 'DELETE_FLASHCARDS';
 const DELETE_FLASHCARDS_SUCCESS = 'DELETE_FLASHCARDS_SUCCESS';
 const DELETE_FLASHCARDS_FAIL = 'DELETE_FLASHCARDS_FAIL';

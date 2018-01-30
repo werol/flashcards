@@ -5,7 +5,7 @@ import { getSession } from "../../reducers/authentication";
 import "stylus/main.styl";
 import {INDEXED_DB_OBJECT_STORE_NAME, MENU_FOR_GUEST, MENU_FOR_USER, OFFLINE, ONLINE} from "../constants/constants";
 import {synchronizeFlashcards} from "../../reducers/synchronize";
-import {getAllData} from "../../indexedDB/dbHandler";
+import {INDEXED_DB_HANDLER_MODULE} from "../../indexedDB/dbHandler";
 import AcceptVersionModal from "../component/AcceptVersionModal";
 
 
@@ -42,7 +42,7 @@ export class App extends Component {
 
   updateOnlineStatus(synchronizeFlashcards, _that) {
     document.getElementById("status").innerHTML = ONLINE;
-    getAllData(INDEXED_DB_OBJECT_STORE_NAME)
+    INDEXED_DB_HANDLER_MODULE.getAllData(INDEXED_DB_OBJECT_STORE_NAME)
       .then(result => {
         const flashcardSets = result.map(flashcardSet => {
           const setId = flashcardSet.setId;

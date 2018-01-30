@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router";
 import {getColor, INDEXED_DB_OBJECT_STORE_NAME, OFFLINE, ONLINE} from "../constants/constants";
-import {deleteData, getAllData, getData} from "../../indexedDB/dbHandler";
+import {INDEXED_DB_HANDLER_MODULE} from "../../indexedDB/dbHandler";
 import {getStrategy} from "../utils";
 
 export default class Home extends Component {
@@ -15,7 +15,7 @@ export default class Home extends Component {
     const getFlashcardsActions = {
       [OFFLINE] : () => {
         this.props.startGettingFlashcards();
-        getAllData(INDEXED_DB_OBJECT_STORE_NAME)
+        INDEXED_DB_HANDLER_MODULE.getAllData(INDEXED_DB_OBJECT_STORE_NAME)
           .then(result => this.props.setFlashcards({data: result}))
       },
       [ONLINE] : this.props.fetchFlashcards
@@ -27,7 +27,7 @@ export default class Home extends Component {
     const getCurrentFlashcardsActions = {
       [OFFLINE] : () => {
         this.props.startGettingCurrentFlashcards();
-        getData(INDEXED_DB_OBJECT_STORE_NAME, setId)
+        INDEXED_DB_HANDLER_MODULE.getData(INDEXED_DB_OBJECT_STORE_NAME, setId)
         .then(result => {
           this.props.setCurrentFlashcards({data: result})
         })
@@ -40,7 +40,7 @@ export default class Home extends Component {
   handleDeletingFlashcardSet(strategy, setId) {
     const getCurrentFlashcardsActions = {
       [OFFLINE] : () => {
-        deleteData(INDEXED_DB_OBJECT_STORE_NAME, setId);
+        INDEXED_DB_HANDLER_MODULE.deleteData(INDEXED_DB_OBJECT_STORE_NAME, setId);
         this.props.deleteFlashcardsFromIndexedDBSuccess();
         this.handleGettingAllFlashcards(strategy);
       },

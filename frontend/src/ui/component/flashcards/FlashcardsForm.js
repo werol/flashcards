@@ -2,7 +2,7 @@ import React from 'react'
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import {connect} from 'react-redux';
 import {saveFlashcards, saveFlashcardsToIndexedDBSuccess} from "../../../reducers/flashcardsSave";
-import {addData, getAllKeys, putData} from "../../../indexedDB/dbHandler";
+import {INDEXED_DB_HANDLER_MODULE} from "../../../indexedDB/dbHandler";
 import { browserHistory } from 'react-router';
 import {INDEXED_DB_OBJECT_STORE_NAME, OFFLINE, ONLINE} from "../../constants/constants";
 import {getStrategy} from "../../utils";
@@ -81,10 +81,10 @@ const handleSavingFlashcards = (strategy, values, dispatch) => {
   const saveFlashcardsActions = {
     [OFFLINE] : () => {
       values.setId ?
-        putData(INDEXED_DB_OBJECT_STORE_NAME, values)
+        INDEXED_DB_HANDLER_MODULE.putData(INDEXED_DB_OBJECT_STORE_NAME, values)
           .then(browserHistory.push('/'))
-      : getAllKeys(INDEXED_DB_OBJECT_STORE_NAME).then(result => {
-          addData(INDEXED_DB_OBJECT_STORE_NAME, {...values, setId: parseFloat(`${parseInt(result[result.length - 1] + 1)}.1`)});
+      : INDEXED_DB_HANDLER_MODULE.getAllKeys(INDEXED_DB_OBJECT_STORE_NAME).then(result => {
+          INDEXED_DB_HANDLER_MODULE.addData(INDEXED_DB_OBJECT_STORE_NAME, {...values, setId: parseFloat(`${parseInt(result[result.length - 1] + 1)}.1`)});
           dispatch(saveFlashcardsToIndexedDBSuccess());
           browserHistory.push('/');
         });
