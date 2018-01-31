@@ -114,6 +114,7 @@ axios.post('/api/register', {
   });
 ```
 *Odpowiedź:*
+
 Kod odpowiedzi HTTP: `200 OK`
 ```javascript
 {
@@ -146,6 +147,7 @@ axios.post('/api/login', {
   });
 ```
 *Odpowiedź:*
+
 Kod odpowiedzi HTTP: `200 OK`
 ```javascript
 {
@@ -173,6 +175,7 @@ axios.get('/api/session')
   });
 ```
 *Odpowiedź:*
+
 Kod odpowiedzi HTTP: `200 OK`
 ```javascript
 {
@@ -220,6 +223,7 @@ axios.get('/api/users')
 ```
 
 *Odpowiedź:*
+
 Kod odpowiedzi HTTP: `200 OK`
 ```javascript
 [
@@ -345,7 +349,7 @@ axios.get('/api/flashcards/1')
 
 *URL:*  `/api/flashcards`
 
- *Metoda:* `GET`
+*Metoda:* `GET`
 
 *Przykład:*
 ```javascript
@@ -363,7 +367,7 @@ axios.get('/api/flashcards')
 
 *URL:*  `/api/synchronize`
 
- *Metoda:* `POST`
+*Metoda:* `POST`
 
 *Przykład:*
 ```javascript
@@ -399,6 +403,7 @@ axios.post('/api/synchronize', {
   });  
 ```
 *Odpowiedź:*
+
 Kod odpowiedzi HTTP: `200 OK`
 ```javascript
 {
