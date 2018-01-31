@@ -1,5 +1,7 @@
 package flashcards.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,6 +14,7 @@ public class User implements Serializable {
   @Id
   private String username;
 
+  @JsonIgnore
   private String password;
 
   private String firstName;

@@ -1,6 +1,7 @@
 import {fetchCurrentFlashcards, fetchFlashcards} from "../../reducers/flashcards";
 import {deleteFlashcards} from "../../reducers/flashcardsDelete";
 import {saveFlashcards} from "../../reducers/flashcardsSave";
+import {updateFlashcards} from "../../reducers/flashcardsUpdate";
 
 export const OnlineStrategy = function () {
 
@@ -17,6 +18,8 @@ export const OnlineStrategy = function () {
   };
 
   this.saveFlashcards = function(dispatch, values) {
-    dispatch(saveFlashcards(values));
+    values.setId ?
+      dispatch(updateFlashcards(values)) :
+      dispatch(saveFlashcards(values));
   }
 };

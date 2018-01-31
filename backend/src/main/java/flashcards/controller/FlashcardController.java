@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -38,12 +38,21 @@ public class FlashcardController {
   }
 
   @RequestMapping(method=POST, path="/api/flashcards")
-  public ResponseEntity<?> createFlashcardSet(@RequestBody FlashcardSet flashcardSet) {
+  public ResponseEntity<FlashcardSet> createFlashcardSet(@Valid @RequestBody FlashcardSet flashcardSet) {
     return new ResponseEntity<>(flashcardSetService.save(flashcardSet), HttpStatus.CREATED);
   }
 
+  @RequestMapping(method=PUT, path="/api/flashcards")
+  public ResponseEntity<FlashcardSet> updateFlashcardSet(@Valid @RequestBody FlashcardSet flashcardSet) {
+    if (flashcardSetService.findBySetId(flashcardSet.getSetId()) != null) {
+      return new ResponseEntity<>(flashcardSetService.save(flashcardSet), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
   @RequestMapping(method=POST, path="/api/synchronize")
-  public ResponseEntity<FlashcardSetsDTO> synchronizeFlashcardSets(@RequestBody FlashcardSetsDTO flashcardSetList) {
+  public ResponseEntity<FlashcardSetsDTO> synchronizeFlashcardSets(@Valid @RequestBody FlashcardSetsDTO flashcardSetList) {
     return new ResponseEntity<>(flashcardSetService.synchronize(flashcardSetList), HttpStatus.OK);
   }
 
