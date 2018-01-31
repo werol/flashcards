@@ -372,29 +372,29 @@ axios.get('/api/flashcards')
 *Przykład:*
 ```javascript
 axios.post('/api/synchronize', {
-	  version: 1517431172887,	
-	  flashcardSets: [{
-	    setId: 1,
-	    version: 2,
-	    name: 'Animals',
-	    flashcards: [{
-	      frontSide: 'cat',
-	      backSide: 'kot'
-	    }, {
-	      frontSide: 'cat',
-	      backSide: 'kot'
-	    }]
-	  }, {
-	    name: 'Numbers',
-	    flashcards: [{
-	      frontSide: 'one',
-	      backSide: 'jeden'
-	    }, {
-	      frontSide: 'two',
-	      backSide: 'dwa'
-	    }]
-	  }]
-	})
+    version: 1517431172887,	
+    flashcardSets: [{
+      setId: 1,
+      version: 2,
+      name: 'Animals',
+      flashcards: [{
+        frontSide: 'cat',
+        backSide: 'kot'
+      }, {
+        frontSide: 'cat',
+        backSide: 'kot'
+      }]
+    }, {
+      name: 'Numbers',
+      flashcards: [{
+        frontSide: 'one',
+        backSide: 'jeden'
+      }, {
+        frontSide: 'two',
+        backSide: 'dwa'
+      }]
+    }]
+  })
   .then(response => {
     console.log(response);
   })
