@@ -67,23 +67,28 @@ Aplikacja zostanie uruchomiona pod adresem:
 http://localhost:8080/
 `` 
 
-## Dokumentacja API
+## Dokumentacja
 
 ### Spis treści
-+ [Użytkownik](#user)
-  + [Rejestracja użytkownika](#register)
-  + [Logowanie](#login)
-  + [Informacje o sesji](#session)
-  + [Wylogowywanie](#logout)
-  + [Lista wszystkich użytkowników](#users)
-+ [Zestawy fiszek](#flashcardSets)
-  + [Tworzenie zestawu](#create)
-  + [Edycja zestawu](#update)
-  + [Usuwanie zestawu](#delete)
-  + [Zestaw](#set)
-  + [Lista wszystkich zestawów](#sets)
-  + [Synchronizacja](#synchronize)
++ [Dokumentacja API](#docAPI)
+  + [Użytkownik](#user)
+    + [Rejestracja użytkownika](#register)
+    + [Logowanie](#login)
+    + [Informacje o sesji](#session)
+    + [Wylogowywanie](#logout)
+    + [Lista wszystkich użytkowników](#users)
+  + [Zestawy fiszek](#flashcardSets)
+    + [Tworzenie zestawu](#create)
+    + [Edycja zestawu](#update)
+    + [Usuwanie zestawu](#delete)
+    + [Zestaw](#set)
+    + [Lista wszystkich zestawów](#sets)
+    + [Synchronizacja](#synchronize)
++ [Zrzuty ekranu](#screenshots)
   
+<a name="docAPI"/>
+
+## Dokumentacja API  
   
 <a name="user"/>
 
@@ -604,6 +609,10 @@ Kod odpowiedzi HTTP: `200 OK`
     "version": 1517602995656
 }
 ```
+<a name="screenshots"/>
+
+## Zrzuty ekranu 
+
 ![alt text](https://image.ibb.co/ga6hjR/1.png)
 ![alt text](https://image.ibb.co/kq8gB6/10.png)
 ![alt text](https://image.ibb.co/dLYgB6/11.png)
