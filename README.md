@@ -445,3 +445,15 @@ Kod odpowiedzi HTTP: `200 OK`
     "version": 1517434077774
 }
 ```
+![alt text](https://image.ibb.co/ga6hjR/1.png)
+![alt text](https://image.ibb.co/kq8gB6/10.png)
+![alt text](https://image.ibb.co/dLYgB6/11.png)
+![alt text](https://image.ibb.co/hggtr6/2.png)
+![alt text](https://image.ibb.co/jv14ym/3.png)
+![alt text](https://image.ibb.co/cTWF4R/4.png)
+![alt text](https://image.ibb.co/h2kmB6/5.png)
+![alt text](https://image.ibb.co/iPO6B6/6.png)
+![alt text](https://image.ibb.co/mEDv4R/7.png)
+![alt text](https://image.ibb.co/mRszW6/8.png)
+![alt text](https://image.ibb.co/d8Btr6/9.png)
+
