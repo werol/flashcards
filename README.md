@@ -556,12 +556,9 @@ axios.post('/api/synchronize', {
     version: 1517431172887,	
     flashcardSets: [{
       setId: 1,
-      version: 2,
+      version: 1,
       name: 'Animals',
       flashcards: [{
-        frontSide: 'cat',
-        backSide: 'kot'
-      }, {
         frontSide: 'cat',
         backSide: 'kot'
       }]
@@ -591,7 +588,7 @@ Kod odpowiedzi HTTP: `200 OK`
     "flashcardSets": [
         {
             "setId": 2,
-            "version": 1,
+            "version": 2,
             "owner": "Fred41",
             "name": "Animals",             
             "lastModified": 1517604771815,
