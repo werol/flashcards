@@ -125,6 +125,34 @@ Kod odpowiedzi HTTP: `200 OK`
     "role": "USER"
 }
 ```
+*Zwracane błędy:*
+
+Warunek: Przesyłane dane nie spełniają kryteriów (np. hasło ma mniej niż 8 znaków, nie zawiera dużej litery i cyfry), lub obiekt JSON nie zawiera wszystkich wymaganych pól
+
+Kod odpowiedzi HTTP: `400 Bad Request`
+
+```javascript
+{
+    "messageKey": "userData.error.badRequest"
+}
+```
+Warunek: Przesyłany username już istnieje
+
+Kod odpowiedzi HTTP: `400 Bad Request`
+```javascript
+{
+    "messageKey": "register.error.usernameExists"
+}
+```
+Warunek: Przesyłany email już istnieje
+
+Kod odpowiedzi HTTP: `400 Bad Request`
+```javascript
+{
+    "messageKey": "register.error.emailExists"
+}
+```
+
 <a name="login"/>
 
 #### Logowanie
@@ -154,6 +182,17 @@ Kod odpowiedzi HTTP: `200 OK`
     "username": "Fred41",
     "token": "6D55B805C77A21230EA9269091FFBE75",
     "authenticated": true
+}
+```
+*Zwracane błędy:*
+
+Warunek: Niepoprawny login lub hasło
+
+Kod odpowiedzi HTTP: `400 Bad Request`
+
+```javascript
+{
+    "messageKey": "login.error.badLogin"
 }
 ```
 <a name="session"/>
@@ -258,6 +297,7 @@ Kod odpowiedzi HTTP: `200 OK`
 *Przykład:*
 ```javascript
 axios.post('/api/flashcards', {
+    owner: 'Fred41',
     name: 'Animals',
     flashcards: [
       {
@@ -277,6 +317,41 @@ axios.post('/api/flashcards', {
     console.log(error);
   });  
 ```
+*Odpowiedź:*
+
+Kod odpowiedzi HTTP: `200 OK`
+```javascript
+{
+    "setId": 2,
+    "version": 0,
+    "owner": "Fred41",
+    "name": "Animals",
+    "lastModified": 1517603827715,
+    "flashcards": [
+        {
+            "flashcardId": 13,
+            "frontSide": "cat",
+            "backSide": "kot"
+        },
+        {
+            "flashcardId": 14,
+            "frontSide": "dog",
+            "backSide": "pies"
+        }
+    ]
+}
+```
+*Zwracane błędy:*
+
+Warunek: Obiekt JSON nie zawiera wszystkich wymaganych pól
+
+Kod odpowiedzi HTTP: `400 Bad Request`
+
+```javascript
+{
+    "messageKey": "flashcards.error.badRequest"
+}
+```
 
 <a name="update"/>
 
@@ -290,7 +365,8 @@ axios.post('/api/flashcards', {
 ```javascript
 axios.put('/api/flashcards', {
     setId: 2,
-    version: 3,
+    version: 0,
+    owner: 'Fred41',
     name: 'Animals',
     flashcards: [ 
       {
@@ -306,7 +382,36 @@ axios.put('/api/flashcards', {
     console.log(error);
   });  
 ```
+*Odpowiedź:*
 
+Kod odpowiedzi HTTP: `200 OK`
+```javascript
+{
+    "setId": 2,
+    "version": 1,
+    "owner": "Fred41",
+    "name": "Animals",
+    "lastModified": 1517604771815,
+    "flashcards": [
+        {
+            "flashcardId": 15,
+            "frontSide": "fish",
+            "backSide": "ryba"
+        }
+    ]
+}
+```
+*Zwracane błędy:*
+
+Warunek: Obiekt JSON nie zawiera wszystkich wymaganych pól
+
+Kod odpowiedzi HTTP: `400 Bad Request`
+
+```javascript
+{
+    "messageKey": "flashcards.error.badRequest"
+}
+```
 <a name="delete"/>
 
 #### Usuwanie zestawu
@@ -317,7 +422,7 @@ axios.put('/api/flashcards', {
 
 *Przykład:*
 ```javascript
-axios.delete('/api/flashcards/1')
+axios.delete('/api/flashcards/2')
   .then(response => {
     console.log(response);
   })
@@ -325,6 +430,16 @@ axios.delete('/api/flashcards/1')
     console.log(error);
   });  
 ```
+*Odpowiedź:*
+
+Kod odpowiedzi HTTP: `200 OK`
+
+*Zwracane błędy:*
+
+Warunek: Set o podanym id nie istnieje
+
+Kod odpowiedzi HTTP: `404 Not Found`
+
 <a name="set"/>
 
 #### Zestaw
@@ -335,7 +450,7 @@ axios.delete('/api/flashcards/1')
 
 *Przykład:*
 ```javascript
-axios.get('/api/flashcards/1')
+axios.get('/api/flashcards/2')
   .then(response => {
     console.log(response);
   })
@@ -343,6 +458,34 @@ axios.get('/api/flashcards/1')
     console.log(error);
   });  
 ```
+
+*Odpowiedź:*
+
+Kod odpowiedzi HTTP: `200 OK`
+
+```javascript
+{
+    "setId": 2,
+    "version": 1,
+    "owner": "Fred41",
+    "name": "Animals",
+    "lastModified": 1517604771815,
+    "flashcards": [
+        {
+            "flashcardId": 15,
+            "frontSide": "fish",
+            "backSide": "ryba"
+        }
+    ]
+}
+```
+
+*Zwracane błędy:*
+
+Warunek: Set o podanym id nie istnieje
+
+Kod odpowiedzi HTTP: `404 Not Found`
+
 <a name="sets"/>
 
 #### Lista wszystkich zestawów
@@ -360,6 +503,44 @@ axios.get('/api/flashcards')
   .catch(error => {
     console.log(error);
   });  
+```
+*Odpowiedź:*
+
+Kod odpowiedzi HTTP: `200 OK`
+```javascript
+{
+    "flashcardSets": [
+        {
+            "setId": 2,
+            "version": 1,
+            "owner": "Fred41",
+            "name": "Animals",             
+            "lastModified": 1517604771815,
+            "flashcards": [
+                {
+                    "flashcardId": 15,
+                    "frontSide": "fish",
+                    "backSide": "ryba"
+                }
+            ]
+        },
+        {
+            "setId": 3,
+            "version": 1,
+            "owner": "Fred41",
+            "name": "Numbers",
+            "lastModified": 1517431161000,
+            "flashcards": [
+                {
+                    "flashcardId": 5,
+                    "frontSide": "one",
+                    "backSide": "jeden"
+                }
+            ]
+        }
+    ],
+    "version": 1517602995656
+}
 ```
 <a name="synchronize"/>
 
@@ -409,40 +590,21 @@ Kod odpowiedzi HTTP: `200 OK`
 {
     "flashcardSets": [
         {
-            "setId": 1,
-            "version": 5,
-            "owner": "Fred42",
-            "name": "Animals",
-            "lastModified": 1517431173000,
-            "flashcards": [
-                {
-                    "flashcardId": 2,
-                    "frontSide": "cat",
-                    "backSide": "kot"
-                },
-                {
-                    "flashcardId": 3,
-                    "frontSide": "dog",
-                    "backSide": "pies"
-                }
-            ]
-        },
-        {
-            "setId": 3,
+            "setId": 2,
             "version": 1,
             "owner": "Fred41",
-            "name": "Numbers",
-            "lastModified": 1517431161000,
+            "name": "Animals",             
+            "lastModified": 1517604771815,
             "flashcards": [
                 {
-                    "flashcardId": 5,
-                    "frontSide": "one",
-                    "backSide": "jeden"
+                    "flashcardId": 15,
+                    "frontSide": "fish",
+                    "backSide": "ryba"
                 }
             ]
         }
     ],
-    "version": 1517434077774
+    "version": 1517602995656
 }
 ```
 ![alt text](https://image.ibb.co/ga6hjR/1.png)

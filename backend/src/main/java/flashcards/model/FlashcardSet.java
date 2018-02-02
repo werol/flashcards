@@ -3,6 +3,7 @@ package flashcards.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
@@ -18,12 +19,15 @@ public class FlashcardSet implements Serializable {
   @Version
   private Long version;
 
+  @NotNull
   private String owner;
 
+  @NotNull
   private String name;
 
   private Timestamp lastModified;
 
+  @NotNull
   @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="flashcardSet", orphanRemoval=true)
   @JsonManagedReference
   private Set<Flashcard> flashcards;
