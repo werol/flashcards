@@ -651,7 +651,9 @@ Kod odpowiedzi HTTP: `200 OK`
 ### Strategia
 
 `frontend/src/ui/handlingIndexedDB/HandlingIndexedDBStrategy.js`
+
 `frontend/src/ui/handlingIndexedDB/OnlineStrategy.js`
+
 `frontend/src/ui/handlingIndexedDB/OfflineStrategy.js`
 
 <a name="builder"/>
