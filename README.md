@@ -85,6 +85,11 @@ http://localhost:8080/
     + [Lista wszystkich zestawów](#sets)
     + [Synchronizacja](#synchronize)
 + [Zrzuty ekranu](#screenshots)
++ [Wykorzystane wzorce](#patterns)
+  + [Optimistic Offline Lock](#optimistic)
+  + [Wzorzec modułu](#module)
+  + [Strategia](#strategy)
+  + [Builder](#builder)
   
 <a name="docAPI"/>
 
@@ -625,3 +630,32 @@ Kod odpowiedzi HTTP: `200 OK`
 ![alt text](https://image.ibb.co/mRszW6/8.png)
 ![alt text](https://image.ibb.co/d8Btr6/9.png)
 
+<a name="patterns"/>
+
+## Wykorzystane wzorce
+
+<a name="optimistic"/>
+
+### Optimistic Offline Lock
+
+`backend/src/main/java/flashcards/service/FlashcardSetServiceImpl.java`
+
+<a name="module"/>
+
+### Wzorzec modułu
+
+`frontend/src/indexedDB/dbHandler.js`
+
+<a name="strategy"/>
+
+### Strategia
+
+`frontend/src/ui/handlingIndexedDB/HandlingIndexedDBStrategy.js`
+`frontend/src/ui/handlingIndexedDB/OnlineStrategy.js`
+`frontend/src/ui/handlingIndexedDB/OfflineStrategy.js`
+
+<a name="builder"/>
+
+### Builder
+
+`frontend/src/ui/component/forms/FormFieldBuilder.js`
