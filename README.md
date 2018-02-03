@@ -638,16 +638,51 @@ Kod odpowiedzi HTTP: `200 OK`
 
 ### Optimistic Offline Lock
 
+Blokada optymistyczna dopuszcza wielu użytkowników do operowania na wspólnych danych. W przypadku, gdy jeden z użytkowników chce dokonać aktualizacji danych, sprawdzane jest, czy dysponuje on aktualną wersją rekordu, który jest w bazie. W przypadku, gdy jego wersja jest starsza, wprowadzone zmiany są
+wycofywane. 
+W implementacji blokady optymistycznej został wykorzystany numer wersji, który inkrementuje się po każdej aktualizacji rekordu.
+
+#### Implementacja
+
+`backend/src/main/java/flashcards/model/FlashcardSet.java`
+```java
+@Entity
+@Table(name="flashcard_sets")
+public class FlashcardSet implements Serializable {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO )
+  private Long setId;
+
+  @Version
+  private Long version;
+
+  // ...
+```
+
 `backend/src/main/java/flashcards/service/FlashcardSetServiceImpl.java`
+
+```java
+flashcardSets.getFlashcardSets().forEach(set -> {
+  try {
+    // aktualizacja rekordu w bazie
+    flashcardSetRepository.save(set);
+  } catch (ObjectOptimisticLockingFailureException e) {
+    // obsługa wyjątku, gdy wersje nie są zgodne
+  }
+});
+```
 
 <a name="module"/>
 
 ### Wzorzec modułu
 
-`frontend/src/indexedDB/dbHandler.js`
-
 Wzorzec zastosowany do organizacji kodu służącego do obsługi IndexedDB. Obiekt przechowuje wewnątrz pewne zmienne jako prywatne (nazwa bazy, wersja), natomiast kod zwracany jest traktowany jako publiczny (funkcje służące np. do wstawiania, pobierania rekordu). Pozwala
 to na ukrycie części implementacji i dostęp do metod spoza samego obiektu.
+
+#### Implementacja
+
+`frontend/src/indexedDB/dbHandler.js`
 
 ```javascript
 const INDEXED_DB_HANDLER_MODULE = (function () {
