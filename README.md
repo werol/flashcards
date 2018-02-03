@@ -638,6 +638,7 @@ Kod odpowiedzi HTTP: `200 OK`
 
 ### Optimistic Offline Lock
 
+Ten wzorzec pozwala na zachowanie spójności edytowanych danych, informując użytkownika na końcu procesu edycji, że edycja jest niemożliwa z powodu zmiany, jaka zaszła w trakcie jego próby edycji.
 Blokada optymistyczna dopuszcza wielu użytkowników do operowania na wspólnych danych. W przypadku, gdy jeden z użytkowników chce dokonać aktualizacji danych, sprawdzane jest, czy dysponuje on aktualną wersją rekordu, który jest w bazie. W przypadku, gdy jego wersja jest starsza, wprowadzone zmiany są
 wycofywane. 
 W implementacji blokady optymistycznej został wykorzystany numer wersji, który inkrementuje się po każdej aktualizacji rekordu.
