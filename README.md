@@ -709,11 +709,89 @@ const INDEXED_DB_HANDLER_MODULE = (function () {
 
 ### Strategia
 
+Wzorzec ten został użyty do wymiennego stosowania implementacji obsługi IndexedDB w zależności czy użytkownik jest offline czy online.
+
+#### Implementacja
+
 `frontend/src/ui/handlingIndexedDB/HandlingIndexedDBStrategy.js`
+
+```javascript
+const HandlingIndexedDBStrategy = function(dispatch) {
+  this.strategy = null;
+  this.dispatch = dispatch;
+};
+
+HandlingIndexedDBStrategy.prototype = {
+
+  setStrategy: function(strategy) {
+    this.strategy = strategy;
+  },
+
+  getAllFlashcards: function() {
+    this.strategy.getAllFlashcards(this.dispatch);
+  },
+
+  getCurrentFlashcards: function(setId) {
+    this.strategy.getCurrentFlashcards(this.dispatch, setId);
+  },
+
+  deleteFlashcardSet: function(setId) {
+    this.strategy.deleteFlashcardSet(this.dispatch, setId);
+  },
+
+  saveFlashcards: function(values) {
+    this.strategy.saveFlashcards(this.dispatch, values);
+  }
+
+};
+
+```
 
 `frontend/src/ui/handlingIndexedDB/OnlineStrategy.js`
 
+```javascript
+const OnlineStrategy = function () {
+
+  this.getAllFlashcards = function(dispatch) {
+    // implementacja
+  };
+
+  this.getCurrentFlashcards = function(dispatch, setId) {
+    // implementacja
+  };
+
+  this.deleteFlashcardSet = function(dispatch, setId) {
+    // implementacja
+  };
+
+  this.saveFlashcards = function(dispatch, values) {
+    // implementacja
+  }
+};
+```
+
 `frontend/src/ui/handlingIndexedDB/OfflineStrategy.js`
+
+```javascript
+const OfflineStrategy = function () {
+
+  this.getAllFlashcards = function(dispatch) {
+    // implementacja
+  };
+
+  this.getCurrentFlashcards = function(dispatch, setId) {
+    // implementacja
+  };
+
+  this.deleteFlashcardSet = function(dispatch, setId) {
+    // implementacja
+  };
+
+  this.saveFlashcards = function(dispatch, values) {
+    // implementacja
+  }
+};
+```
 
 <a name="builder"/>
 
