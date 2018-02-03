@@ -7,7 +7,7 @@ export const INDEXED_DB_HANDLER_MODULE = (function () {
   const version = 1;
 
   return {
-    initDb: function (name, key){
+    initDb: function (objectStoreName, key){
       return new Promise((resolve, reject) => {
         IndexedDB(dbName, version, {
           success: function(event) {
@@ -17,7 +17,7 @@ export const INDEXED_DB_HANDLER_MODULE = (function () {
             reject(event.target.error);
           },
           upgradeneeded: function(event) {
-            this.createObjectStore(name, key);
+            this.createObjectStore(objectStoreName, key);
             resolve(true);
           }
         });
@@ -25,11 +25,11 @@ export const INDEXED_DB_HANDLER_MODULE = (function () {
         console.error(error);
       });
     },
-    addData: function (name, data) {
+    addData: function (objectStoreName, data) {
       return new Promise((resolve, reject) => {
         IndexedDB(dbName, version, {
           success: function(event) {
-            const store = this.getObjectStore(name, true);
+            const store = this.getObjectStore(objectStoreName, true);
             store.add(data);
             this.close();
             resolve(true);
@@ -37,11 +37,11 @@ export const INDEXED_DB_HANDLER_MODULE = (function () {
         });
       });
     },
-    putData: function (name, data) {
+    putData: function (objectStoreName, data) {
       return new Promise((resolve, reject) => {
         IndexedDB(dbName, version, {
           success: function(event) {
-            const store = this.getObjectStore(name, true);
+            const store = this.getObjectStore(objectStoreName, true);
             store.put(data);
             this.close();
             resolve(true);
@@ -49,12 +49,12 @@ export const INDEXED_DB_HANDLER_MODULE = (function () {
         });
       });
     },
-    getAllData: function (name) {
+    getAllData: function (objectStoreName) {
       return new Promise((resolve, reject) => {
         IndexedDB(dbName, version, {
           success: function(event) {
             const _this = this;
-            const store = this.getObjectStore(name);
+            const store = this.getObjectStore(objectStoreName);
             store.getAll(function(event){
               _this.close();
               resolve(event.target.result);
@@ -63,12 +63,12 @@ export const INDEXED_DB_HANDLER_MODULE = (function () {
         });
       });
     },
-    getData: function (name, key) {
+    getData: function (objectStoreName, key) {
       return new Promise((resolve, reject) => {
         IndexedDB(dbName, version, {
           success: function(event) {
             const _this = this;
-            const store = this.getObjectStore(name);
+            const store = this.getObjectStore(objectStoreName);
             store.get(key, function(event){
               _this.close();
               resolve(event.target.result);
@@ -77,12 +77,12 @@ export const INDEXED_DB_HANDLER_MODULE = (function () {
         });
       });
     },
-    getAllKeys: function (name) {
+    getAllKeys: function (objectStoreName) {
       return new Promise((resolve, reject) => {
         IndexedDB(dbName, version, {
           success: function(event) {
             const _this = this;
-            const store = this.getObjectStore(name);
+            const store = this.getObjectStore(objectStoreName);
             store.getAllKeys(function(event){
               _this.close();
               resolve(event.target.result);
@@ -91,11 +91,11 @@ export const INDEXED_DB_HANDLER_MODULE = (function () {
         });
       });
     },
-    deleteData: function (name, key) {
+    deleteData: function (objectStoreName, key) {
       return new Promise((resolve, reject) => {
         IndexedDB(dbName, version, {
           success: function(event) {
-            const store = this.getObjectStore(name, true);
+            const store = this.getObjectStore(objectStoreName, true);
             store.delete(key);
             this.close();
             resolve(true);
@@ -103,11 +103,11 @@ export const INDEXED_DB_HANDLER_MODULE = (function () {
         });
       });
     },
-    clearData: function (name){
+    clearData: function (objectStoreName){
       return new Promise((resolve, reject) => {
         IndexedDB(dbName, version, {
           success: function(event) {
-            const store = this.getObjectStore(name, true);
+            const store = this.getObjectStore(objectStoreName, true);
             store.clear();
             this.close();
             resolve(true);

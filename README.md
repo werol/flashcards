@@ -646,6 +646,29 @@ Kod odpowiedzi HTTP: `200 OK`
 
 `frontend/src/indexedDB/dbHandler.js`
 
+Wzorzec zastosowany do organizacji kodu służącego do obsługi IndexedDB. Obiekt przechowuje wewnątrz pewne zmienne jako prywatne (nazwa bazy, wersja), natomiast kod zwracany jest traktowany jako publiczny (funkcje służące np. do wstawiania, pobierania rekordu). Pozwala
+to na ukrycie części implementacji i dostęp do metod spoza samego obiektu.
+
+```javascript
+const INDEXED_DB_HANDLER_MODULE = (function () {
+
+  const dbName = 'datebase';
+  const version = 1;
+
+  return {
+    initDb: function (objectStoreName, key){
+      // implementacja
+    },
+    addData: function (objectStoreName, data) {
+      // impementacja
+    },
+    getData: function (objectStoreName, key) {
+      // implementacja
+    }
+  };
+})();
+```
+
 <a name="strategy"/>
 
 ### Strategia
