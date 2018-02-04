@@ -643,6 +643,8 @@ Blokada optymistyczna dopuszcza wielu użytkowników do operowania na wspólnych
 wycofywane. 
 W implementacji blokady optymistycznej został wykorzystany numer wersji, który inkrementuje się po każdej aktualizacji rekordu.
 
+![alt text](https://image.ibb.co/gfcQRH/optimistic.png)
+
 #### Implementacja
 
 `backend/src/main/java/flashcards/model/FlashcardSet.java`
