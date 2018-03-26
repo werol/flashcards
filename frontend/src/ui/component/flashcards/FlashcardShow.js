@@ -1,6 +1,4 @@
 import React, {Component} from "react";
-import {INDEXED_DB_OBJECT_STORE_NAME, OFFLINE, ONLINE} from "../../constants/constants";
-import {INDEXED_DB_HANDLER_MODULE} from "../../../indexedDB/dbHandler";
 import {getStrategy} from "../../handlingIndexedDB/getStrategy";
 import {HandlingIndexedDBStrategy} from "../../handlingIndexedDB/HandlingIndexedDBStrategy";
 
@@ -55,7 +53,12 @@ export default class FlashcardShow extends Component {
                     .map(item => (
                       <div className="flashcard" key={item.flashcardId}>
                         <div className="front face">{item.frontSide}</div>
-                        <div className="back face">{item.backSide}</div>
+                        <div className="back face">
+                          <button onClick={() => responsiveVoice.speak(item.backSide, "UK English Female", {rate: 1, pitch: 1})} type="button" className="btn btn-default">
+                            <span className="glyphicon glyphicon-volume-up"/>
+                          </button>
+                          {`  ${item.backSide}`}
+                        </div>
                       </div>
                     ))
                 }
