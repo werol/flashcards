@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import FlipCard from 'react-flipcard';
 import {getStrategy} from "../../handlingIndexedDB/getStrategy";
 import {HandlingIndexedDBStrategy} from "../../handlingIndexedDB/HandlingIndexedDBStrategy";
 
@@ -8,7 +9,7 @@ export default class FlashcardShow extends Component {
     super(props);
 
     this.state = {
-      currentIndex: 0
+      currentIndex: 0,
     };
 
     const setId = this.props.params.setId;
@@ -24,14 +25,23 @@ export default class FlashcardShow extends Component {
 
   previousCard(){
     const {currentIndex} = this.state;
-    if (currentIndex > 0)
-      this.setState({currentIndex: currentIndex - 1})
+    if (currentIndex > 0) {
+      this.setState({currentIndex: currentIndex - 1});
+    }
   }
 
   nextCard(){
     const {currentIndex} = this.state;
-    if (currentIndex < this.props.set.flashcards.length - 1)
-      this.setState({currentIndex: currentIndex + 1})
+    if (currentIndex < this.props.set.flashcards.length - 1) {
+      this.setState({currentIndex: currentIndex + 1});
+    }
+  }
+
+  playVoice(e, item) {
+    if (!e) e = window.event;
+    e.cancelBubble = true;
+    if (e.stopPropagation) e.stopPropagation();
+    responsiveVoice.speak(item.backSide, "UK English Female", {rate: 1, pitch: 1});
   }
 
   render() {
@@ -51,15 +61,17 @@ export default class FlashcardShow extends Component {
                   set.flashcards
                     .filter((item, index) => index === this.state.currentIndex)
                     .map(item => (
-                      <div className="flashcard" key={item.flashcardId}>
-                        <div className="front face">{item.frontSide}</div>
-                        <div className="back face">
-                          <button onClick={() => responsiveVoice.speak(item.backSide, "UK English Female", {rate: 1, pitch: 1})} type="button" className="btn btn-default">
+                      <FlipCard>
+                        <div>
+                          <div>{item.frontSide}</div>
+                        </div>
+                        <div>
+                          <button onClick={e => this.playVoice(e, item)} type="button" className="btn btn-default ">
                             <span className="glyphicon glyphicon-volume-up"/>
                           </button>
                           {`  ${item.backSide}`}
                         </div>
-                      </div>
+                      </FlipCard>
                     ))
                 }
                 <div className="right-arrow" onClick={this.nextCard.bind(this)}>

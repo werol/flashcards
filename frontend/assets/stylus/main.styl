@@ -164,7 +164,7 @@ input
 
 .flashcard-show
   text-align center
-  max-width 800px
+  max-width 850px
   margin auto
   margin-top 6%
   font-size 36px
@@ -178,27 +178,28 @@ input
     justify-content center
     cursor pointer
 
-  .flashcard
-    display inline-flex
-    width 80%
-    height 400px
+  .ReactFlipCard
+    margin 50px
+    text-align center
+
+  .ReactFlipCard,
+  .ReactFlipCard__Front,
+  .ReactFlipCard__Back
+    box-sizing: border-box
+    width 600px
+    height 300px
+
+  .ReactFlipCard__Front
+  .ReactFlipCard__Back
+    border-radius 10px
+    border 1px solid #ccc
+    padding 25px
     background-color #fff
-    box-shadow 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
-    justify-content center
-    align-items center
-    transform-style preserve-3d
-    transition all 1.0s linear
-    position relative
+    display table
 
-    .face
-      position absolute
-      backface-visibility hidden
-
-    .face.back
-      transform: rotateY(180deg)
-
-  .flashcard:hover
-    transform rotateY(180deg)
+    > div
+      display table-cell
+      vertical-align middle
 
 #status
   position fixed
