@@ -7,7 +7,7 @@ import spock.lang.Stepwise
 import spockmvc.RequestParams
 
 @Stepwise
-class AuthenticationResourceSpec extends AbstractMvcSpec {
+class AuthenticationResourceTest extends AbstractMvcSpec {
 
   @Shared
   String token
@@ -25,7 +25,7 @@ class AuthenticationResourceSpec extends AbstractMvcSpec {
 
   def "good authentication"() {
     given:
-    def credentials = [username: 'user', password: 'password']
+    def credentials = [username: 'testUser', password: '6txQ40pd']
 
     when:
     def res = post('/api/session', credentials)
@@ -33,7 +33,7 @@ class AuthenticationResourceSpec extends AbstractMvcSpec {
 
     then:
     res.status == HttpStatus.OK
-    res.json.username == 'user'
+    res.json.username == 'testUser'
     token != null
   }
 
@@ -43,7 +43,7 @@ class AuthenticationResourceSpec extends AbstractMvcSpec {
 
     then:
     res.status == HttpStatus.OK
-    res.json.username == 'user'
+    res.json.username == 'testUser'
   }
 
   def "delete session"() {

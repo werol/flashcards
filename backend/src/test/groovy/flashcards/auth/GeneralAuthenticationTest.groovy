@@ -4,11 +4,11 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.test.context.support.WithMockUser
 import flashcards.AbstractMvcSpec
 
-class AuthenticationSpec extends AbstractMvcSpec {
+class GeneralAuthenticationTest extends AbstractMvcSpec {
 
   def "unauthenticated users cannot get resource"() {
     when:
-    def res = get("/api/users")
+    def res = get("/api/flashcards")
 
     then:
     res.status == HttpStatus.FORBIDDEN
@@ -17,7 +17,7 @@ class AuthenticationSpec extends AbstractMvcSpec {
   @WithMockUser
   def "authenticated users can get resource"() {
     when:
-    def res = get("/api/users")
+    def res = get("/api/flashcards")
 
     then:
     res.status == HttpStatus.OK
