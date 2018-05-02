@@ -112,8 +112,8 @@ http://localhost:8080/
 axios.post('/api/register', {
     firstName: 'Fred',
     lastName: 'Flintstone',
-    username: 'Fred41'
-    email: 'fredflintstone@yahoo.com'
+    username: 'Fred41',
+    email: 'fredflintstone@yahoo.com',
     password: 'IloveWilma123'
   })
   .then(response => {

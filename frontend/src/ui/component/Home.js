@@ -8,6 +8,9 @@ export default class Home extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      searchValue: ''
+    };
     this.handlingIndexedDBStrategy = new HandlingIndexedDBStrategy(this.props.dispatch);
     this.handleGettingAllFlashcards();
   }
@@ -33,17 +36,31 @@ export default class Home extends Component {
       this.handleDeletingFlashcardSet(flashcardSet.setId);
   }
 
+  handleSearchInputChange(event) {
+    const searchValue = event.target.value;
+    this.setState({searchValue});
+  }
+
   render() {
     const items = this.props.items;
     return (
       <div className="flashcard-sets-grid">
         <h1>Flashcards</h1>
+        <div className="search-bar">
+          <input type="text"
+                 placeholder="Search for flashcard set..."
+                 onChange={this.handleSearchInputChange.bind(this)}
+          />
+          <span className="glyphicon glyphicon-search"/>
+        </div>
         <div>
           {
             items ?
               <div>
                 {
-                  this.props.items.map((item, index) => (
+                  this.props.items
+                    .filter(item => item.name.toLowerCase().includes(this.state.searchValue.toLowerCase()))
+                    .map((item, index) => (
                     <div className="tile-container" key={item.setId}>
                       <div className="config">
                         <Link to={'/flashcards-form'} onClick={this.handleGettingCurrentFlashcards.bind(this, item.setId)}>

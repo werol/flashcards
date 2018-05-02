@@ -3,21 +3,18 @@ package flashcards.api
 import flashcards.AbstractMvcSpec
 import org.springframework.http.HttpStatus
 import org.springframework.security.test.context.support.WithMockUser
-import spock.lang.Shared
-import spock.lang.Stepwise
-import spockmvc.RequestParams
 
 @WithMockUser
 class FlashcardsResourceTest extends AbstractMvcSpec {
 
-  def "user can get all flashcard sets"() {
+  def "getting all flashcard sets"() {
     when:
     def response = get('/api/flashcards')
 
     then:
     response.status == HttpStatus.OK
 
-    def flashcardSets = response.getJson().flashcardSets
+    def flashcardSets = response.json.flashcardSets
     flashcardSets.size == 2
 
     def numbersSet = flashcardSets.find { set -> set.name == 'Numbers' && set.owner == 'testUser' }
@@ -31,14 +28,14 @@ class FlashcardsResourceTest extends AbstractMvcSpec {
 
   }
 
-  def "user can get one flashcard set by id"() {
+  def "getting one flashcard set by id"() {
     when:
     def response = get('/api/flashcards/1')
 
     then:
     response.status == HttpStatus.OK
 
-    def flashcardSet = response.getJson()
+    def flashcardSet = response.json
     flashcardSet.name == 'Numbers'
     flashcardSet.owner == 'testUser'
 
@@ -48,7 +45,7 @@ class FlashcardsResourceTest extends AbstractMvcSpec {
 
   }
 
-  def "user can create flashcard set"() {
+  def "creating flashcard set"() {
     given:
     def request = [
       'owner': 'testUser',
@@ -70,7 +67,7 @@ class FlashcardsResourceTest extends AbstractMvcSpec {
 
     then:
     response.status == HttpStatus.CREATED
-    def setId = response.getJson().setId
+    def setId = response.json.setId
 
     when:
     response = get('/api/flashcards/' + setId)
@@ -78,7 +75,7 @@ class FlashcardsResourceTest extends AbstractMvcSpec {
     then:
     response.status == HttpStatus.OK
 
-    def flashcardSet = response.getJson()
+    def flashcardSet = response.json
     flashcardSet.name == 'Animals'
     flashcardSet.owner == 'testUser'
 
@@ -91,7 +88,7 @@ class FlashcardsResourceTest extends AbstractMvcSpec {
     then:
     response.status == HttpStatus.OK
 
-    def flashcardSets = response.getJson().flashcardSets
+    def flashcardSets = response.json.flashcardSets
     def animalsSet = flashcardSets.find { set -> set.name == 'Animals' && set.owner == 'testUser' }
 
     animalsSet.flashcards.any { flashcard -> flashcard.frontSide == 'cat' && flashcard.backSide == 'kot' }
@@ -99,7 +96,7 @@ class FlashcardsResourceTest extends AbstractMvcSpec {
 
   }
 
-  def "user can update flashcard set"() {
+  def "updating flashcard set"() {
     given:
     def setId = 1
     def request = [
@@ -126,7 +123,7 @@ class FlashcardsResourceTest extends AbstractMvcSpec {
 
     then:
     response.status == HttpStatus.OK
-    def flashcardSet = response.getJson()
+    def flashcardSet = response.json
     flashcardSet.name == 'Numbers'
     flashcardSet.owner == 'testUser'
 
@@ -137,7 +134,7 @@ class FlashcardsResourceTest extends AbstractMvcSpec {
 
   }
 
-  def "user can delete flashcard set by id"() {
+  def "deleting flashcard set by id"() {
     given:
     def setId = 1
 
@@ -159,8 +156,21 @@ class FlashcardsResourceTest extends AbstractMvcSpec {
     then:
     response.status == HttpStatus.OK
 
-    def flashcardSets = response.getJson().flashcardSets
+    def flashcardSets = response.json.flashcardSets
     assert !flashcardSets.any { set -> set.name == 'Numbers' && set.owner == 'testUser' }
+
+  }
+
+  def "synchronizing flashcard sets with up-to-date flashcard sets"() {
+    given:
+    def request = get('/api/flashcards')
+
+    when:
+    def response = post('/api/synchronize', request.json)
+
+    then:
+    response.status == HttpStatus.OK
+    response.json.flashcardSets == []
 
   }
 
